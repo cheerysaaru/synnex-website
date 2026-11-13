@@ -11,7 +11,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from '../lib/router.jsx';
 
-const NOW = 3; // the job is currently at "Testing"
+const NOW = 4; // the example job is finished: every step, including handover, is done
 
 const STEPS = [
   { title: 'Quote approved', note: 'Quote approved and materials ordered the same day.', img: '1503387762-592deb58ef4e' },
@@ -88,9 +88,8 @@ export default function JobTimeline() {
   /* before the reader reaches the timeline, the card shows the real status */
   const shown = reached < 0 ? NOW : reached;
   const stateOf = (i) => {
-    if (i > NOW) return 'next';
+    if (i > NOW) return 'next'; // (unused while the job is finished)
     if (i > reached) return 'idle';
-    if (i === NOW) return 'now';
     return 'done';
   };
   const label = { done: 'Done', now: 'In progress', next: 'Up next', idle: '' };
@@ -111,12 +110,12 @@ export default function JobTimeline() {
                 <strong>Rooftop solar PV system</strong>
                 <span>Nugegoda · 5 kW grid-tied</span>
               </div>
-              <span className={`jt-status${shown === NOW ? ' live' : ''}`} key={shown}>{STEPS[shown].title}</span>
+              <span className="jt-status" key={shown}>{shown === STEPS.length - 1 ? 'Completed' : STEPS[shown].title}</span>
             </div>
             <div className="jt-bar"><i style={{ width: `${((shown + 1) / STEPS.length) * 100}%` }} /></div>
             <ol className="jt-mini" aria-hidden="true">
               {STEPS.map((st, i) => (
-                <li key={st.title} className={i < shown ? 'done' : i === shown ? 'now' : ''}>{st.title}</li>
+                <li key={st.title} className={i <= shown ? 'done' : ''}>{st.title}</li>
               ))}
             </ol>
           </div>
@@ -151,7 +150,7 @@ export default function JobTimeline() {
                       </span>
                       <div>
                         <strong>Installation test certificate</strong>
-                        <em>PDF · ready after testing</em>
+                        <em>PDF · ready to download</em>
                       </div>
                     </div>
                   )}
