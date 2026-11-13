@@ -32,6 +32,8 @@ jobs:
         env:
           VITE_BASE: /
           VITE_API_URL: https://api.synnex-technology.com/api
+          # public Web3Forms form key: enquiries are emailed to hello@synnex-technology.com
+          VITE_WEB3FORMS_KEY: dfc97231-314b-409d-b80f-60b761316d69
       - name: Page links work when opened directly (.htaccess for OpenLiteSpeed)
         working-directory: frontend
         run: |

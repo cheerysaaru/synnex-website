@@ -93,6 +93,59 @@ async function request(path, { method = 'GET', body, csrf = false, retryOn419 = 
   return data;
 }
 
+/* ---------- enquiry email (Web3Forms) ----------
+   When VITE_WEB3FORMS_KEY is set, every enquiry (contact form and chat quote
+   request) is emailed to the business inbox the key was created for:
+   hello@synnex-technology.com. This works on the static GitHub Pages site,
+   which has no backend. The key is a public form key, safe in the browser. */
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || '';
+/* save to the Laravel backend too, when one is available (local dev, or a hosted API) */
+const HAS_BACKEND = Boolean(import.meta.env.DEV || import.meta.env.VITE_API_URL);
+
+async function emailEnquiry(p) {
+  let response;
+  try {
+    response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: `New website enquiry: ${p.service || 'General'} from ${p.name || 'a visitor'}`,
+        from_name: 'Synnex Technology website',
+        replyto: p.email || undefined,
+        name: p.name,
+        email: p.email,
+        phone: p.phone || '-',
+        service: p.service || '-',
+        message: p.message || '-',
+        page: window.location.href,
+        botcheck: '',
+      }),
+    });
+  } catch {
+    throw new ApiError('Could not send your enquiry. Please check your connection or call us.', 0);
+  }
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || data.success === false) {
+    throw new ApiError(data.message || 'Could not send your enquiry. Please call us instead.', response.status);
+  }
+  return data;
+}
+
+async function submitEnquiry(payload) {
+  if (!WEB3FORMS_KEY) {
+    return request('/contact-submissions', { method: 'POST', body: payload, csrf: true });
+  }
+  /* email is the delivery that must succeed; the backend copy is best-effort */
+  const saved = HAS_BACKEND
+    ? request('/contact-submissions', { method: 'POST', body: payload, csrf: true }).catch(() => null)
+    : Promise.resolve(null);
+  const result = await emailEnquiry(payload);
+  /* never keep the visitor waiting on the backend copy */
+  await Promise.race([saved, new Promise((resolve) => { setTimeout(resolve, 4000); })]);
+  return { ok: true, ...result };
+}
+
 export const api = {
   csrf: () => ensureCsrf(),
   me: () => request('/auth/me'),
@@ -101,5 +154,5 @@ export const api = {
   logout: () => request('/auth/logout', { method: 'POST', csrf: true }),
   myEnquiries: () => request('/my/enquiries'),
   adminOverview: () => request('/admin/overview'),
-  submitEnquiry: (payload) => request('/contact-submissions', { method: 'POST', body: payload, csrf: true }),
+  submitEnquiry,
 };
