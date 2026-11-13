@@ -349,24 +349,20 @@
 
 /* ---------- phones: panel becomes a bottom sheet */
 @media (max-width: 560px) {
+  /* same floating popup as on large screens, sized for a phone */
   .ca-panel {
-    right: 0;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: min(86dvh, 640px);
-    border-radius: 20px 20px 0 0;
-    transform-origin: bottom center;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    right: 12px;
+    left: auto;
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+    width: min(360px, calc(100vw - 24px));
+    height: min(520px, calc(100dvh - 160px));
+    border-radius: 18px;
+    transform-origin: bottom right;
+    font-size: 14px;
   }
 
   .ca-form input {
     font-size: 16px; /* no iOS zoom */
-  }
-
-  .ca-fab.open {
-    opacity: 0;
-    pointer-events: none;
   }
 
   .ca-fab {
