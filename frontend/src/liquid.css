@@ -171,3 +171,12 @@ body .site.is-front nav.nv:not(.sc):not(.om):not(.mopen) .nv-login:focus-visible
     opacity: 1;
   }
 }
+
+/* Text must always contrast with the liquid fill on hover. Some page styles set
+   the button text colour with very specific selectors (e.g. white ghost buttons
+   in the dark CTA band), which used to win over the hover colour and leave
+   white text on a white fill. This rule always wins (disabled buttons have no fill). */
+:is(.btn, .hm-pill, .nv-login, .nv-cta, .wa, .login-submit):not(:disabled):not([disabled]):is(:hover, :focus-visible) {
+  color: var(--liquid-text) !important;
+  -webkit-text-fill-color: var(--liquid-text);
+}
