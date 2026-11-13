@@ -3,8 +3,10 @@
 return [
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
     'allowed_methods' => ['*'],
+    // FRONTEND_URL can list several sites, comma separated, e.g.
+    // https://synnex-technology.com,https://www.synnex-technology.com
     'allowed_origins' => array_values(array_unique(array_filter([
-        env('FRONTEND_URL', 'http://127.0.0.1:3200'),
+        ...array_map('trim', explode(',', (string) env('FRONTEND_URL', 'http://127.0.0.1:3200'))),
         'http://127.0.0.1:3200',
         'http://localhost:3200',
         'http://127.0.0.1:3001',
