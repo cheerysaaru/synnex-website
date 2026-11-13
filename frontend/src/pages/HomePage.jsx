@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { api } from '../lib/api.js';
 import { Link } from '../lib/router.jsx';
 import ServicesStack from '../components/ServicesStack.jsx';
@@ -92,8 +92,20 @@ export default function HomePage({ t, en, phone, heroVideo = `${import.meta.env.
   const blankForm = { name: '', email: '', phone: '', service: serviceNames[0], message: '' };
   const [form, setForm] = useState(blankForm);
   const [sent, setSent] = useState(false);
+  const formRef = useRef(null);
+  const thanksRef = useRef(null);
+  const [cardHeight, setCardHeight] = useState(0);
   const [sending, setSending] = useState(false);
   const [formError, setFormError] = useState('');
+
+  useEffect(() => {
+    if (sent && thanksRef.current) thanksRef.current.focus({ preventScroll: true });
+  }, [sent]);
+
+  const sendAnother = () => {
+    setSent(false);
+    setFormError('');
+  };
 
   const updateForm = (event) => setForm({ ...form, [event.target.name]: event.target.value });
 
@@ -104,6 +116,7 @@ export default function HomePage({ t, en, phone, heroVideo = `${import.meta.env.
     setSent(false);
     try {
       await api.submitEnquiry({ ...form });
+      if (formRef.current) setCardHeight(formRef.current.offsetHeight);
       setSent(true);
       setForm(blankForm);
     } catch (error) {
@@ -249,7 +262,17 @@ export default function HomePage({ t, en, phone, heroVideo = `${import.meta.env.
               <p className="hm-base">{tr('contact.base', 'Based in Colombo, working island-wide')}<br />{tr('contact.hours', 'Monday to Friday, 10am to 6pm')}</p>
             </div>
 
-            <form className="hm-form" onSubmit={handleSubmit}>
+            {sent ? (
+              <div className="hm-form hm-thanks" role="status" style={cardHeight ? { minHeight: cardHeight } : undefined}>
+                <span className="hm-thanks-tick" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                </span>
+                <h3 className="hm-thanks-title" tabIndex={-1} ref={thanksRef}>Thank you</h3>
+                <p className="hm-thanks-text">Your enquiry has been sent. We will call you back soon, usually within one working day.</p>
+                <button type="button" className="hm-thanks-again" onClick={sendAnother}>Submit another enquiry</button>
+              </div>
+            ) : (
+            <form className="hm-form" onSubmit={handleSubmit} ref={formRef}>
               <label>
                 {tr('form.label.name', 'Your name')}
                 <input name="name" value={form.name} onChange={updateForm} placeholder={tr('form.placeholder.name', '')} required autoComplete="name" />
@@ -278,8 +301,8 @@ export default function HomePage({ t, en, phone, heroVideo = `${import.meta.env.
                 {sending ? tr('form.sending', 'Sending…') : tr('form.submit', 'Send enquiry')}
               </button>
               {formError ? <p className="hm-err" role="alert">{formError}</p> : null}
-              {sent ? <p className="hm-ok" role="status">{tr('contact.thanks', 'Thank you. We will call you back soon.')}</p> : null}
             </form>
+            )}
           </div>
         </div>
       </section>
