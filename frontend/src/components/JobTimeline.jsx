@@ -14,11 +14,11 @@ import { Link } from '../lib/router.jsx';
 const NOW = 3; // the job is currently at "Testing"
 
 const STEPS = [
-  { title: 'Quote approved', date: '2 Nov', note: 'Quote approved and materials ordered the same day.', img: '1503387762-592deb58ef4e' },
-  { title: 'Site visit', date: '5 Nov', note: 'Roof and shading checked, panel layout marked out.', img: '1668097613572-40b7c11c8727' },
-  { title: 'Installation', date: '10 Nov', note: 'Twelve panels fitted, inverter and isolators wired.', img: '1624397640148-949b1732bb0a' },
-  { title: 'Testing', date: '14 Nov', note: 'Insulation and earth tests under way.', img: '1758101755915-462eddc23f57' },
-  { title: 'Handover', date: '18 Nov', note: 'Walkthrough, test certificate and net metering papers.' },
+  { title: 'Quote approved', note: 'Quote approved and materials ordered the same day.', img: '1503387762-592deb58ef4e' },
+  { title: 'Site visit', note: 'Roof and shading checked, panel layout marked out.', img: '1668097613572-40b7c11c8727' },
+  { title: 'Installation', note: 'Twelve panels fitted, inverter and isolators wired.', img: '1624397640148-949b1732bb0a' },
+  { title: 'Testing', note: 'Insulation and earth tests under way.', img: '1758101755915-462eddc23f57' },
+  { title: 'Handover', note: 'Walkthrough, test certificate and net metering papers.' },
 ];
 
 const photo = (id, w) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&h=${Math.round(w * 0.5)}&q=70`;
@@ -114,10 +114,11 @@ export default function JobTimeline() {
               <span className={`jt-status${shown === NOW ? ' live' : ''}`} key={shown}>{STEPS[shown].title}</span>
             </div>
             <div className="jt-bar"><i style={{ width: `${((shown + 1) / STEPS.length) * 100}%` }} /></div>
-            <div className="jt-job-rows">
-              <div><span>Quote</span><b>LKR 1,240,000</b><em>Approved 2 Nov</em></div>
-              <div><span>Next visit</span><b>Tue, 18 Nov</b><em>9:30 am · K. Arulalagan</em></div>
-            </div>
+            <ol className="jt-mini" aria-hidden="true">
+              {STEPS.map((st, i) => (
+                <li key={st.title} className={i < shown ? 'done' : i === shown ? 'now' : ''}>{st.title}</li>
+              ))}
+            </ol>
           </div>
         </div>
 
@@ -132,10 +133,11 @@ export default function JobTimeline() {
                   {st === 'done' ? <Check /> : <b>{i + 1}</b>}
                 </span>
                 <div className="jt-body">
-                  <div className="jt-meta">
-                    <time>{s.date}</time>
-                    {label[st] ? <span className={`jt-tag jt-tag-${st}`}>{label[st]}</span> : null}
-                  </div>
+                  {label[st] ? (
+                    <div className="jt-meta">
+                      <span className={`jt-tag jt-tag-${st}`}>{label[st]}</span>
+                    </div>
+                  ) : null}
                   <h3>{s.title}</h3>
                   <p>{s.note}</p>
                   {s.img ? (

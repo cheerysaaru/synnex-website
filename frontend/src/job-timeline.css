@@ -137,3 +137,22 @@
   .is-idle .jt-body { transform: none; }
   .jt-status, .jt-status.live::before { animation: none; }
 }
+
+/* step list inside the job card (replaces the quote / visit boxes) */
+.jt-mini { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.jt-mini li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: #9ca3af; }
+.jt-mini li::before {
+  content: '';
+  width: 18px; height: 18px; flex: none;
+  border-radius: 50%;
+  border: 2px solid #d6d9de;
+  box-sizing: border-box;
+  transition: background .3s, border-color .3s;
+}
+.jt-mini li.done { color: #0b1220; }
+.jt-mini li.done::before {
+  border-color: #2563eb;
+  background: #2563eb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center / 11px no-repeat;
+}
+.jt-mini li.now { color: #1d4ed8; font-weight: 600; }
+.jt-mini li.now::before { border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37,99,235,.15); }
