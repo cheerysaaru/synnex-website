@@ -1,0 +1,929 @@
+/* ==========================================================================
+   One theme for every page — matches the home page.
+   Warm off-white paper, near-black ink, Space Grotesk headlines, white
+   rounded cards, soft grey panels, black pill buttons with amber accents.
+   Loaded last so it can restyle the inner-page components in pages.css.
+   ========================================================================== */
+
+/* ---------- tokens: force the light home palette (also in OS dark mode) */
+html body,
+html body .site {
+  --paper: #f0f0eb;
+  --card: #ffffff;
+  --panel: #e7e7e1;
+  --ink: #111110;
+  --mute: #686863;
+  --line: rgba(17, 17, 16, 0.12);
+  --accent: #111110;
+  --amber: #2563eb;
+  --night: #111110;
+  --night-2: #1c1c1a;
+  color-scheme: light;
+}
+
+html body {
+  background: #f0f0eb;
+  color: #111110;
+}
+
+.site {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* ---------- nav: frosted white bar on every page except over the home video */
+body .site.is-home:not(.is-front) nav.nv {
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: 0 1px 0 rgba(17, 17, 16, 0.08), 0 10px 30px rgba(17, 17, 16, 0.06);
+  color: var(--ink);
+}
+
+/* ---------- headings, same voice as the home page */
+.site :is(.page-title, .sec-title, .cta-band-title, .auth-title, .callout h2, .survey-box h2, .notice h2, .info-callout h2) {
+  font-family: 'Space Grotesk', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.site :is(.ui-card h3, .timeline-body h3, .process-step h3, .team-body h3, .cert-head h3) {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- page hero: light, centred, like the home section headings */
+.site .page-hero {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 168px 0 64px;
+  text-align: center;
+}
+
+.site .page-hero .w {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.site .page-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ink);
+  font: 500 13px/1 'Inter', sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+  margin-bottom: 24px;
+}
+
+.site .page-eyebrow::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber);
+}
+
+.site .page-title {
+  color: var(--ink);
+  font-size: clamp(40px, 6vw, 76px);
+  line-height: 1.02;
+  max-width: 18ch;
+  margin-inline: auto;
+}
+
+.site .page-intro {
+  color: var(--mute);
+  margin-inline: auto;
+}
+
+.site .page-meta {
+  color: var(--mute);
+}
+
+.site .page-hero-actions {
+  justify-content: center;
+}
+
+/* ---------- sections: grey "alt" bands become rounded panels like the home page */
+.site .sec {
+  padding: 80px 0;
+}
+
+.site .sec.alt {
+  background: var(--panel);
+  border: 0;
+  border-radius: 14px;
+  margin: 0 12px;
+}
+
+.site .sec-head.center .sec-title,
+.site .sec-head.center .sec-intro {
+  margin-inline: auto;
+}
+
+/* small eyebrow text above section titles */
+.site .sec-head > span:first-child,
+.site .sec-head .k {
+  color: var(--mute);
+}
+
+/* ---------- cards */
+.site .ui-card,
+.site .quote-card,
+.site .notice,
+.site .auth-card,
+.site .post-card,
+.site .case-card,
+.site .team-card,
+.site .contact-card {
+  background: var(--card);
+  border: 0;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.site .sec:not(.alt) :is(.ui-card, .quote-card, .post-card, .case-card, .team-card, .contact-card) {
+  box-shadow: 0 1px 0 rgba(17, 17, 16, 0.04), 0 0 0 1px rgba(17, 17, 16, 0.06);
+}
+
+.site a.ui-card:hover,
+.site a.ui-card:focus-visible {
+  border-color: transparent;
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(17, 17, 16, 0.1);
+}
+
+.site .post-foot,
+.site .survey-alt a {
+  color: var(--ink);
+}
+
+/* figures */
+.site .stat {
+  background: var(--card);
+  border: 0;
+  border-radius: 14px;
+}
+
+.site .stat-value {
+  color: var(--ink);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+/* timeline + process accents in amber */
+.site .timeline-item::before,
+.site .sec.alt .timeline-item::before {
+  background: var(--amber);
+  border-color: var(--amber);
+  box-shadow: none;
+}
+
+.site .timeline-year,
+.site .process-num {
+  color: var(--ink);
+}
+
+.site .process-num {
+  display: inline-flex;
+  align-self: flex-start;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #e8efff;
+  border: 1px solid var(--amber);
+  font: 600 12px/1 'Inter', sans-serif;
+}
+
+/* badges, chips, check marks */
+.site .badge {
+  background: var(--panel);
+  color: var(--ink);
+  border-color: transparent;
+}
+
+.site .chip {
+  background: #ffffff;
+  color: var(--ink);
+  border-color: transparent;
+}
+
+.site .chip.on,
+.site .chip[aria-pressed='true'] {
+  background: var(--ink);
+  color: #ffffff;
+  border-color: var(--ink);
+}
+
+.site .check-grid li::before {
+  background: #e8efff;
+  border-color: var(--amber);
+}
+
+.site .info-callout {
+  background: #e8efff;
+  border-left-color: var(--amber);
+}
+
+.site .notice {
+  border-left: 4px solid var(--amber);
+}
+
+/* image placeholders: warm grey instead of blue */
+.site .ph {
+  background: linear-gradient(135deg, #2a2a27 0%, #4a4a44 55%, #8a7a4a 140%);
+}
+
+/* search boxes */
+.site .search input {
+  background: #ffffff;
+  border-color: transparent;
+  color: var(--ink);
+}
+
+/* accordion (FAQ) — white rounded rows like the home FAQ */
+.site .acc-item {
+  background: #ffffff;
+  border: 0;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.site .acc-trigger {
+  color: var(--ink);
+}
+
+/* ---------- buttons: pill style from the home page */
+.site .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #ffffff;
+  border: 1px solid var(--ink);
+  font: 500 15px/1 'Inter', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  --liquid: #2563eb;
+  --liquid-text: #ffffff;
+}
+
+.site .btn:hover {
+  transform: none;
+}
+
+.site .btn.ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(17, 17, 16, 0.3);
+  --liquid: #111110;
+  --liquid-text: #ffffff;
+}
+
+.site .page-hero .btn {
+  background: var(--ink);
+}
+
+.site .page-hero .btn.ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: rgba(17, 17, 16, 0.3);
+}
+
+/* ---------- dark rounded blocks (CTA band, callouts) like the home contact block */
+.site .cta-band {
+  background: var(--ink);
+  color: #ffffff;
+  border-radius: 14px;
+  margin: 16px 12px 16px;
+  padding: 72px 0;
+}
+
+.site .cta-band-title,
+.site .callout h2,
+.site .survey-box h2 {
+  color: #ffffff;
+}
+
+.site .cta-band-intro,
+.site .callout p,
+.site .survey-box p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.site .callout,
+.site .survey-box {
+  background: var(--ink);
+  border-radius: 14px;
+}
+
+.site :is(.cta-band, .callout, .survey-box) .btn {
+  background: #ffffff;
+  color: var(--ink);
+  border-color: #ffffff;
+  --liquid: #2563eb;
+  --liquid-text: #ffffff;
+}
+
+.site :is(.cta-band, .callout, .survey-box) .btn.ghost {
+  background: transparent;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.35);
+  --liquid: #ffffff;
+  --liquid-text: #111110;
+}
+
+.site :is(.cta-band, .callout, .survey-box) .survey-alt a {
+  color: #ffffff;
+}
+
+/* the dark block sits right above the dark footer: keep a little paper between */
+.site main > :last-child.cta-band {
+  margin-bottom: 16px;
+}
+
+/* ---------- form fields on inner pages */
+.site :is(.auth-form, .contact-card) :is(input, select, textarea) {
+  background: var(--paper);
+  border-color: transparent;
+  border-radius: 10px;
+  color: var(--ink);
+}
+
+/* ---------- focus ring */
+.site :focus-visible {
+  outline-color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .site .page-hero {
+    padding: 128px 0 44px;
+  }
+
+  .site .sec {
+    padding: 56px 0;
+  }
+
+  .site .sec.alt,
+  .site .cta-band {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+}
+
+/* process steps: white cards on the grey panel */
+.site .process-step {
+  background: #ffffff;
+  border: 0;
+  border-radius: 14px;
+}
+
+.site .process-num {
+  margin-bottom: 14px;
+}
+
+/* ---------- login / register page: same palette as the rest of the site */
+.login-page,
+.login-panel {
+  background: #f0f0eb;
+  color: #111110;
+}
+
+.login-title {
+  color: #111110;
+  font-family: 'Space Grotesk', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+.login-line {
+  font-family: 'Space Grotesk', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.login-intro,
+.login-alt,
+.login-back {
+  color: #686863;
+}
+
+.login-field input {
+  background: #f0f0eb;
+  border-color: transparent;
+  color: #111110;
+}
+
+.login-field input:focus {
+  border-color: #111110;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
+  background: #ffffff;
+}
+
+.login-forgot,
+.login-alt a {
+  color: #111110;
+}
+
+.login-check input {
+  accent-color: #111110;
+}
+
+.login-submit {
+  background: #111110;
+  --liquid: #2563eb;
+  --liquid-text: #ffffff;
+}
+
+/* "Call us" button in the home contact block (replaces the big phone number) */
+.hm-contact .hm-call {
+  margin-top: 28px;
+  min-height: 52px;
+  padding: 0 28px;
+  font-size: 16px;
+  gap: 10px;
+}
+
+.hm-contact .hm-call::after {
+  content: '→';
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* ---------- mobile menu fix
+   A blurred (backdrop-filter) or transformed navbar traps a position:fixed
+   child inside it, which squashed the mobile menu to the bar's height.
+   While the menu is open, the bar drops both and turns solid white, so the
+   menu panel can fill the screen below it again. */
+@media (max-width: 1024px) {
+  html body .site.is-home nav.nv.nv.mopen,
+  html body .site nav.nv.nv.mopen {
+    left: 0;
+    transform: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: #ffffff;
+    color: #111110;
+    box-shadow: 0 1px 0 rgba(17, 17, 16, 0.08);
+  }
+
+  html body .site nav.nv .nv-menu {
+    background: #ffffff;
+    border-top: 1px solid rgba(17, 17, 16, 0.08);
+  }
+}
+
+/* language buttons in the mobile menu: readable in OS dark mode too */
+@media (max-width: 1024px) {
+  html body .site .nv-lang-row.nv-lang-row button {
+    background: #f0f0eb;
+    color: #111110;
+    border-color: transparent;
+  }
+
+  html body .site .nv-lang-row.nv-lang-row button[aria-pressed='true'] {
+    background: #111110;
+    border-color: #111110;
+    color: #ffffff;
+  }
+}
+
+/* ---------- dropdown sections inside the mobile menu: readable, one column */
+@media (max-width: 1024px) {
+  html body .site nav.nv .nv-mega {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    color: #111110;
+  }
+
+  html body .site nav.nv .nv-mega-in {
+    padding: 4px 0 14px 14px;
+    margin-left: 4px;
+    border-left: 2px solid #2563eb;
+    text-align: left;
+  }
+
+  html body .site nav.nv .nv-mega-intro {
+    border: 0;
+    padding: 0;
+    margin: 4px 0 6px;
+  }
+
+  html body .site nav.nv .nv-mega-h {
+    display: none; /* the section name is already on the button above */
+  }
+
+  html body .site nav.nv .nv-mega-p {
+    color: #686863;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 8px;
+    max-width: none;
+  }
+
+  html body .site nav.nv .nv-mega-list {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  html body .site nav.nv .nv-mega-item {
+    display: block;
+    padding: 10px 10px;
+    border-radius: 10px;
+    text-align: left;
+    color: #111110;
+  }
+
+  html body .site nav.nv .nv-mega-item b {
+    display: block;
+    color: #111110;
+    font-size: 16px;
+    text-shadow: none;
+  }
+
+  html body .site nav.nv .nv-mega-item span {
+    display: block;
+    color: #686863;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  html body .site nav.nv .nv-mega-item:hover,
+  html body .site nav.nv .nv-mega-item:focus-visible {
+    background: #f0f0eb;
+  }
+
+  html body .site nav.nv .nv-mega-all {
+    display: inline-flex;
+    margin: 8px 0 0 10px;
+    background: #111110;
+    color: #ffffff;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  html body .site nav.nv .nv-tr {
+    color: #111110;
+  }
+
+  html body .site nav.nv .nv-item.open > .nv-tr {
+    background: #f0f0eb;
+  }
+}
+
+/* ==========================================================================
+   Smooth navbar
+   - The frosted white background lives on its own layer (::before) that only
+     fades its opacity, which the browser animates on the GPU. Animating
+     backdrop-filter / background directly re-paints every frame (janky).
+   - The bar keeps one height (no height animation = no layout jumps).
+   - Hide/show slides with transform only, on a soft ease-out curve.
+   - The bar is no longer centred with transform, so it never traps the
+     mobile menu inside it.
+   ========================================================================== */
+html body .site.is-home nav.nv.nv {
+  left: 0;
+  width: 100%;
+  /* no resting transform / will-change: either one would trap the
+     position:fixed mobile menu inside the 70px bar */
+  transform: none;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), color 0.35s ease;
+}
+
+html body .site.is-home nav.nv.nv::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: 0 1px 0 rgba(17, 17, 16, 0.08), 0 10px 30px rgba(17, 17, 16, 0.06);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* frosted layer visible: scrolled, a dropdown open, mobile menu open, or any inner page */
+html body .site.is-home nav.nv.nv.sc::before,
+html body .site.is-home nav.nv.nv.om::before,
+html body .site.is-home nav.nv.nv.mopen::before,
+html body .site.is-home:not(.is-front) nav.nv.nv::before {
+  opacity: 1;
+}
+
+html body .site.is-home nav.nv.nv.sc,
+html body .site.is-home nav.nv.nv.om,
+html body .site.is-home nav.nv.nv.mopen,
+html body .site.is-home:not(.is-front) nav.nv.nv {
+  color: #111110;
+}
+
+/* dropdown or mobile menu open: a touch more solid so text underneath doesn't show through */
+html body .site.is-home nav.nv.nv.om::before,
+html body .site.is-home nav.nv.nv.mopen::before {
+  background: rgba(255, 255, 255, 0.97);
+}
+
+/* slide up out of view when scrolling down, back when scrolling up */
+html body .site.is-home nav.nv.nv.hd {
+  transform: translateY(-100%);
+}
+
+/* one bar height, no animated resizing */
+html body .site.is-home nav.nv .nv-bar,
+html body .site.is-home nav.nv.sc .nv-bar {
+  height: 70px;
+  transition: none;
+}
+
+/* text and buttons in the bar fade their colours with the background */
+html body .site.is-home nav.nv :is(.nv-logo, .nv-tr, .nv-link, .nv-lang, .nv-burger) {
+  transition: color 0.35s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+html body .site.is-home nav.nv .nv-login {
+  transition: color 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
+}
+
+@media (max-width: 1024px) {
+  /* the mobile menu panel starts right under the 70px bar */
+  html body .site nav.nv .nv-menu {
+    top: calc(70px + env(safe-area-inset-top, 0px));
+  }
+
+  /* drawer open: keep the solid bar from the mobile-menu fix, no slide */
+  html body .site.is-home nav.nv.nv.mopen {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .site.is-home nav.nv.nv,
+  html body .site.is-home nav.nv.nv::before {
+    transition: none;
+  }
+}
+
+/* ---------- mobile menu arrows: bigger, darker, smooth turn, no sticky highlight */
+@media (max-width: 1024px) {
+  html body .site nav.nv .nv-tr .chev {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f0f0eb;
+    color: #111110;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease;
+  }
+
+  html body .site nav.nv .nv-tr .chev svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  html body .site nav.nv .nv-tr[aria-expanded='true'] .chev {
+    transform: rotate(180deg);
+    background: #2563eb;
+    color: #ffffff;
+  }
+
+  /* sections open and close with a smooth height animation */
+  html body .site nav.nv .nv-mega {
+    transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* touch screens: no hover highlight left stuck under the finger */
+  html body .site nav.nv .nv-mega-item:hover {
+    background: transparent;
+  }
+
+  html body .site nav.nv .nv-mega-item:active,
+  html body .site nav.nv .nv-mega-item:focus-visible {
+    background: #f0f0eb;
+  }
+}
+
+@media (max-width: 1024px) and (hover: hover) and (pointer: fine) {
+  html body .site nav.nv .nv-mega-item:hover {
+    background: #f0f0eb;
+  }
+}
+
+/* ---------- dropdown panels follow the open/closed state only
+   styles.css also showed a panel whenever its button had focus
+   (.nv-item:focus-within). After a tap or click the button keeps focus, so a
+   panel you closed stayed visible. Now a closed panel is hidden unless the
+   visitor is moving through the menu with the keyboard (:focus-visible). */
+@media (min-width: 1025px) {
+  html body .site nav.nv .nv-item:not(.open):not(:has(:focus-visible)) > .nv-mega {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  html body .site nav.nv .nv-item:not(.open) > .nv-mega {
+    max-height: 0;
+  }
+}
+
+/* touch: closed section rows don't keep a grey highlight after a tap */
+@media (max-width: 1024px) {
+  html body .site.is-home nav.nv .nv-item:not(.open) > .nv-tr:is(:hover, :focus) {
+    background: transparent;
+  }
+
+  html body .site.is-home nav.nv .nv-item:not(.open) > .nv-tr:focus-visible {
+    background: #f0f0eb;
+  }
+}
+
+/* ---------- animated hero (HeroMesh canvas) */
+.hm-hero-frame {
+  background: #0c0d10; /* near-black, like the reference */
+}
+
+.hero-mesh {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* keep the headline readable: darker in the middle, open at the edges */
+.hm-hero-shade.hm-hero-shade-mesh {
+  pointer-events: none;
+  background: radial-gradient(ellipse 46% 32% at 50% 50%, rgba(12, 13, 16, 0.55), rgba(12, 13, 16, 0) 75%);
+}
+
+.hm-hero-copy {
+  pointer-events: none; /* let the grid feel the pointer under the text */
+}
+
+.hm-hero-copy a,
+.hm-hero-copy button {
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   Hero headline: light-bulb flicker
+   1. On load it stutters on like a bulb when the supply is weak.
+   2. Then it glows steadily, and every ~7s the "current" dips: a quick,
+      irregular flicker and a brief brown-out dim, then back to full glow.
+   Only opacity, colour and text-shadow animate, so it stays smooth.
+   ========================================================================== */
+.hm-hero-copy h1 {
+  color: #f4f8ff;
+  text-shadow:
+    0 0 6px rgba(160, 196, 255, 0.55),
+    0 0 22px rgba(59, 125, 255, 0.45),
+    0 0 48px rgba(37, 99, 235, 0.3);
+  animation:
+    bulb-power-on 1.8s linear both,
+    bulb-shortage 7s linear 1.8s infinite;
+}
+
+/* stuttering start-up */
+@keyframes bulb-power-on {
+  0%   { opacity: 0.08; text-shadow: none; }
+  6%   { opacity: 0.9; }
+  8%   { opacity: 0.12; text-shadow: none; }
+  14%  { opacity: 0.12; }
+  16%  { opacity: 1; }
+  19%  { opacity: 0.25; text-shadow: none; }
+  30%  { opacity: 0.25; }
+  32%  { opacity: 0.85; }
+  35%  { opacity: 0.4; text-shadow: none; }
+  45%  { opacity: 0.95; }
+  47%  { opacity: 0.55; }
+  52%  { opacity: 1; }
+  100% {
+    opacity: 1;
+    text-shadow:
+      0 0 6px rgba(160, 196, 255, 0.55),
+      0 0 22px rgba(59, 125, 255, 0.45),
+      0 0 48px rgba(37, 99, 235, 0.3);
+  }
+}
+
+/* steady glow with a short, uneven current dip near the end of each cycle */
+@keyframes bulb-shortage {
+  0%, 78%, 100% {
+    opacity: 1;
+    color: #f4f8ff;
+    text-shadow:
+      0 0 6px rgba(160, 196, 255, 0.55),
+      0 0 22px rgba(59, 125, 255, 0.45),
+      0 0 48px rgba(37, 99, 235, 0.3);
+  }
+  79%  { opacity: 0.35; text-shadow: none; }
+  80%  { opacity: 1; }
+  81%  { opacity: 0.2; text-shadow: none; }
+  82.5% { opacity: 0.2; }
+  83%  { opacity: 0.9; }
+  84%  { opacity: 0.45; text-shadow: none; }
+  /* brown-out: the bulb hangs dim and warm-grey for a moment */
+  85%, 89% {
+    opacity: 0.6;
+    color: #aab3c4;
+    text-shadow: 0 0 4px rgba(59, 125, 255, 0.15);
+  }
+  90%  { opacity: 0.15; text-shadow: none; }
+  91%  { opacity: 1; }
+  92%  { opacity: 0.7; }
+  93%  { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-hero-copy h1 {
+    animation: none;
+  }
+}
+
+/* ---------- city video back behind the animated grid
+   layers: video (dimmed) → grid canvas → readability shade → text */
+.hm-hero-frame .hm-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  filter: saturate(0.85) brightness(0.8);
+}
+
+/* the grid sits above the video; a touch brighter so it still reads */
+.hm-hero-frame .hero-mesh {
+  mix-blend-mode: screen;
+}
+
+.hm-hero-shade.hm-hero-shade-mesh {
+  background:
+    radial-gradient(ellipse 50% 36% at 50% 50%, rgba(12, 13, 16, 0.6), rgba(12, 13, 16, 0) 75%),
+    linear-gradient(180deg, rgba(12, 13, 16, 0.45) 0%, rgba(12, 13, 16, 0.1) 30%, rgba(12, 13, 16, 0.1) 70%, rgba(12, 13, 16, 0.55) 100%);
+}
+
+/* grid removed from the hero: video shows clearly again, shade keeps text readable */
+.hm-hero-frame .hm-hero-video {
+  opacity: 1;
+  filter: none;
+}
+
+.hm-hero-shade.hm-hero-shade-mesh {
+  background: linear-gradient(180deg, rgba(10, 14, 24, 0.62) 0%, rgba(10, 14, 24, 0.42) 50%, rgba(10, 14, 24, 0.5) 100%);
+}
+
+/* ---------- hero: match the video to the blue-white headline
+   The footage is warm orange; the headline glows cool blue. Pull the warmth
+   out of the video and lay a deep navy tint over it so they share one palette. */
+.hm-hero-frame {
+  background: #071026;
+}
+
+.hm-hero-frame .hm-hero-video {
+  opacity: 1;
+  filter: grayscale(0.7) brightness(0.72) contrast(1.08);
+}
+
+.hm-hero-shade.hm-hero-shade-mesh {
+  background:
+    radial-gradient(ellipse 55% 40% at 50% 48%, rgba(7, 16, 38, 0.55), rgba(7, 16, 38, 0) 75%),
+    linear-gradient(180deg, rgba(7, 16, 38, 0.78) 0%, rgba(10, 28, 72, 0.5) 45%, rgba(7, 16, 38, 0.82) 100%);
+}
+
+/* the blue tint layer: turns the remaining city lights cool blue */
+.hm-hero-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #2563eb;
+  mix-blend-mode: color;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* text stays above every layer */
+.hm-hero-frame .hm-hero-copy {
+  z-index: 2;
+}

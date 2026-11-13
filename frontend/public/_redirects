@@ -1,0 +1,3 @@
+# SPA fallback — direct URL navigation loads index.html so React Router-style
+# route mapping in App.jsx initialPage() can render the matched page.
+/*    /index.html   200

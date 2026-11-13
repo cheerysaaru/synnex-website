@@ -1,0 +1,191 @@
+/* ==========================================================================
+   Giant-letters hero (components/LetterHero.jsx)
+   ========================================================================== */
+.lh {
+  --lh-bg: var(--hm-paper, #f0f0eb); /* matches the page background */
+  --lh-size: min(21vw, 52vh);       /* size of the big word */
+  position: relative;
+  height: 300vh;
+  background: var(--lh-bg);
+}
+.lh-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+  background: #0b1220;
+}
+
+.lh-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.15) contrast(1.05);
+}
+.lh-tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(8,13,26,.85) 0%, rgba(8,13,26,.35) 60%, rgba(8,13,26,.25) 100%);
+  opacity: 0;
+}
+
+/* the mask: page-coloured layer, black letters, screen blend */
+.lh-mask {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #fff; /* pure white so nothing of the video shows outside the letters */
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  z-index: 2;
+}
+/* tints the pure white back to the page colour */
+.lh-paper {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--lh-bg);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.lh-word {
+  display: block;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: var(--lh-size);
+  line-height: .78;
+  letter-spacing: -.055em;
+  color: #000;
+  white-space: nowrap;
+  padding-right: .055em; /* balance the negative tracking */
+  user-select: none;
+}
+.lh-word span { display: inline-block; }
+
+/* "Technology" in script, tucked under the right half of the word */
+.lh-script {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: calc(50% + var(--lh-size) * 0.3);
+  transform: translateX(-8%) rotate(-4deg);
+  font-family: 'Great Vibes', 'Segoe Script', 'Brush Script MT', cursive;
+  font-weight: 400;
+  font-size: calc(var(--lh-size) * 0.42);
+  line-height: 1;
+  color: #2563eb;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 2px 0 var(--lh-bg), 0 -2px 0 var(--lh-bg), 2px 0 0 var(--lh-bg), -2px 0 0 var(--lh-bg);
+}
+
+/* intro text on the white page */
+.lh-intro {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  top: max(104px, 14vh);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 clamp(20px, 4vw, 56px);
+  color: #0b1220;
+  pointer-events: none;
+}
+.lh-eyebrow { font-size: 14px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #2563eb; }
+.lh-sub { font-size: 15px; color: #4b5563; }
+
+.lh-hint {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: max(28px, 6vh);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #4b5563;
+  pointer-events: none;
+}
+.lh-mouse { width: 22px; height: 34px; border: 2px solid #9ca3af; border-radius: 12px; display: flex; justify-content: center; padding-top: 6px; box-sizing: border-box; }
+.lh-mouse i { width: 3px; height: 7px; border-radius: 2px; background: #2563eb; animation: lhWheel 1.6s ease-in-out infinite; }
+@keyframes lhWheel { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(9px); opacity: 0; } 100% { transform: translateY(0); opacity: 0; } }
+
+/* headline over the video at the end: bottom-left, like a classic hero */
+.lh-tint {
+  background:
+    linear-gradient(90deg, rgba(6,10,20,.82) 0%, rgba(6,10,20,.45) 45%, rgba(6,10,20,.1) 75%),
+    linear-gradient(0deg, rgba(6,10,20,.75) 0%, rgba(6,10,20,0) 55%);
+}
+.lh-copy {
+  position: absolute;
+  z-index: 3;
+  left: clamp(20px, 6vw, 96px);
+  bottom: clamp(48px, 11vh, 120px);
+  width: min(620px, calc(100% - 40px));
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+}
+.lh-copy-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #93c5fd;
+}
+.lh-copy-eyebrow::before { content: ''; width: 28px; height: 2px; background: #2563eb; border-radius: 2px; }
+.hm .lh .lh-copy h1 {
+  margin: 0 0 18px;
+  max-width: 15ch;
+  font-size: clamp(34px, 4.4vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -.025em;
+  font-weight: 600;
+  text-align: left;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+  text-shadow: none;
+  animation: none;
+}
+.hm .lh .lh-copy p {
+  margin: 0 0 28px;
+  max-width: 44ch;
+  font-size: clamp(15px, 1.25vw, 18px);
+  line-height: 1.55;
+  color: rgba(255,255,255,.8);
+}
+.lh-copy .hm-actions { justify-content: flex-start; }
+
+@media (max-width: 1024px) {
+  .lh { height: 260svh; }
+  .lh-stage { height: 100svh; }
+  .lh { --lh-size: min(21vw, 44svh); }
+}
+@media (max-width: 640px) {
+  .lh-intro { flex-direction: column; align-items: center; text-align: center; gap: 6px; top: 96px; }
+  .lh-eyebrow { font-size: 12px; }
+  .lh-sub { font-size: 14px; }
+}
+
+/* no zoom for people who prefer less motion: video in the letters, headline below */
+@media (prefers-reduced-motion: reduce) {
+  .lh { height: auto; }
+  .lh-stage { height: 100vh; }
+  .lh-mask, .lh-paper { opacity: 0 !important; visibility: hidden !important; }
+  .lh-tint { opacity: .55 !important; }
+  .lh-intro, .lh-hint, .lh-script { display: none; }
+  .lh-copy { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
+  .lh-mouse i { animation: none; }
+}

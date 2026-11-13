@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Liquid hover effect for every button
+   A wobbly blob grows from the cursor's entry point and fills the button,
+   then drains back toward where the cursor leaves. Colours per button type
+   are set with --liquid (fill) and --liquid-text (text on top of the fill).
+   ========================================================================== */
+
+.btn,
+.hm-pill,
+.nv-login,
+.nv-cta,
+.wa,
+.login-submit {
+  --liquid: #111110;
+  --liquid-text: #ffffff;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.35s ease 0.05s, transform 0.25s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.wa {
+  position: fixed; /* keep the floating WhatsApp button where it is */
+}
+
+.btn::before,
+.hm-pill::before,
+.nv-login::before,
+.nv-cta::before,
+.wa::before,
+.login-submit::before {
+  content: '';
+  position: absolute;
+  left: var(--lx, 50%);
+  top: var(--ly, 50%);
+  z-index: -1;
+  width: 260%;
+  aspect-ratio: 1;
+  background: var(--liquid);
+  border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%;
+  transform: translate(-50%, -50%) scale(0) rotate(0deg);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.btn:hover::before,
+.hm-pill:hover::before,
+.nv-login:hover::before,
+.nv-cta:hover::before,
+.wa:hover::before,
+.login-submit:hover::before,
+.btn:focus-visible::before,
+.hm-pill:focus-visible::before,
+.nv-login:focus-visible::before,
+.nv-cta:focus-visible::before,
+.wa:focus-visible::before,
+.login-submit:focus-visible::before {
+  transform: translate(-50%, -50%) scale(1) rotate(120deg);
+  animation: liquid-wobble 2.4s ease-in-out infinite;
+}
+
+.btn:hover,
+.hm-pill:hover,
+.nv-login:hover,
+.nv-cta:hover,
+.wa:hover,
+.login-submit:hover,
+.btn:focus-visible,
+.hm-pill:focus-visible,
+.nv-login:focus-visible,
+.nv-cta:focus-visible,
+.wa:focus-visible,
+.login-submit:focus-visible {
+  color: var(--liquid-text);
+}
+
+.hm-pill:disabled::before,
+.login-submit:disabled::before,
+.btn[disabled]::before {
+  transform: translate(-50%, -50%) scale(0);
+  animation: none;
+}
+
+@keyframes liquid-wobble {
+  0%,
+  100% {
+    border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%;
+  }
+  33% {
+    border-radius: 60% 40% 38% 62% / 55% 62% 38% 45%;
+  }
+  66% {
+    border-radius: 48% 52% 55% 45% / 38% 50% 50% 62%;
+  }
+}
+
+/* ---------------------------------------------------------------- colours per button */
+
+/* dark buttons fill with warm amber */
+.hm-pill-dark,
+.is-home .nv-login,
+.login-submit {
+  --liquid: #2563eb;
+  --liquid-text: #ffffff;
+}
+
+/* light buttons fill with ink */
+.hm-pill-light {
+  --liquid: #111110;
+  --liquid-text: #ffffff;
+}
+
+/* amber site buttons fill with navy */
+.btn {
+  --liquid: #0c1a36;
+  --liquid-text: #ffffff;
+}
+
+.btn.ghost {
+  --liquid: #ffffff;
+  --liquid-text: #0c1a36;
+}
+
+/* nav login while transparent over the home hero (white button) */
+body .site.is-front nav.nv:not(.sc):not(.om):not(.mopen) .nv-login {
+  --liquid: #111110;
+  --liquid-text: #ffffff;
+}
+
+body .site.is-front nav.nv:not(.sc):not(.om):not(.mopen) .nv-login:hover,
+body .site.is-front nav.nv:not(.sc):not(.om):not(.mopen) .nv-login:focus-visible {
+  color: #ffffff;
+}
+
+.nv-cta {
+  --liquid: #1d4ed8;
+  --liquid-text: #ffffff;
+}
+
+/* WhatsApp fills with WhatsApp green */
+.wa {
+  --liquid: #25d366;
+  --liquid-text: #ffffff;
+}
+
+/* disabled dark buttons keep white text and get no blob */
+.hm-pill-dark:disabled,
+.login-submit:disabled {
+  --liquid-text: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn::before,
+  .hm-pill::before,
+  .nv-login::before,
+  .nv-cta::before,
+  .wa::before,
+  .login-submit::before {
+    transition: opacity 0.2s ease;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    animation: none !important;
+  }
+
+  .btn:hover::before,
+  .hm-pill:hover::before,
+  .nv-login:hover::before,
+  .nv-cta:hover::before,
+  .wa:hover::before,
+  .login-submit:hover::before {
+    opacity: 1;
+  }
+}

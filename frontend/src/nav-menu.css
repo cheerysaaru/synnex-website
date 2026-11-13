@@ -1,0 +1,86 @@
+/* ==========================================================================
+   White dropdown (mega menu) panels in the nav, on every page.
+   Doubled .nv.nv beats the dark-mode rules in styles.css, so the panels stay
+   white even when the computer is set to dark mode. Desktop only: on mobile
+   the menus sit inside the drawer and keep the drawer's own colours.
+   ========================================================================== */
+
+@media (min-width: 1025px) {
+  body nav.nv.nv .nv-mega {
+    background: #ffffff;
+    border: 1px solid #e7ecf3;
+    box-shadow: 0 30px 60px rgba(16, 36, 58, 0.14);
+    color: #111111;
+  }
+
+  body nav.nv.nv .nv-mega-intro {
+    border-right-color: #e7ecf3;
+  }
+
+  body nav.nv.nv .nv-kick {
+    color: #6b7690;
+  }
+
+  body nav.nv.nv .nv-mega-h {
+    color: #111111;
+  }
+
+  body nav.nv.nv .nv-mega-p {
+    color: #5b6478;
+  }
+
+  body nav.nv.nv .nv-mega-all {
+    background: #111111;
+    color: #ffffff;
+  }
+
+  body nav.nv.nv .nv-mega-item,
+  body nav.nv.nv .nv-mega-item b {
+    color: #111111;
+  }
+
+  body nav.nv.nv .nv-mega-item span {
+    color: #6b7690;
+  }
+
+  body nav.nv.nv .nv-mega-item:hover,
+  body nav.nv.nv .nv-mega-item:focus-visible {
+    background: #f3f4f1;
+  }
+
+  body nav.nv.nv .nv-mega-item:hover b,
+  body nav.nv.nv .nv-mega-item:focus-visible b {
+    color: #111111;
+    text-shadow: none;
+  }
+
+  body nav.nv.nv .nv-mega-item:hover span,
+  body nav.nv.nv .nv-mega-item:focus-visible span {
+    color: #5b6478;
+  }
+
+  body nav.nv.nv .nv-feat {
+    background: #f6f7f4;
+    border-color: #e7ecf3;
+    color: #111111;
+  }
+
+  body nav.nv.nv .nv-feat-img {
+    background: #e7e7e1;
+  }
+
+  body nav.nv.nv .nv-feat-img img {
+    opacity: 1;
+  }
+
+  body nav.nv.nv .nv-feat-txt span {
+    color: #6b7690;
+  }
+
+  body nav.nv.nv .nv-drop,
+  body nav.nv.nv .nv-lang-drop {
+    background: #ffffff;
+    border-color: #e7ecf3;
+    color: #111111;
+  }
+}

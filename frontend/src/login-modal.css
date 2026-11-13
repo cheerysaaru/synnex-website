@@ -1,0 +1,95 @@
+/* ==========================================================================
+   Sign-in pop-up for small screens (≤ 819px).
+   Slides up from the bottom as a sheet over the current page.
+   ========================================================================== */
+
+.lm {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(17, 17, 16, 0.5);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: lm-fade 0.25s ease both;
+}
+
+.lm-sheet {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #ffffff;
+  color: #111110;
+  border-radius: 22px 22px 0 0;
+  padding: 30px 22px calc(26px + env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -20px 60px rgba(17, 17, 16, 0.25);
+  animation: lm-up 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.lm-grab {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 44px;
+  height: 5px;
+  margin-left: -22px;
+  border-radius: 999px;
+  background: rgba(17, 17, 16, 0.15);
+}
+
+.lm-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: #f0f0eb;
+  color: #111110;
+  cursor: pointer;
+}
+
+.lm-close:hover {
+  background: #e7e7e1;
+}
+
+.lm .login-form-wrap {
+  max-width: none;
+}
+
+.lm .login-title {
+  font-size: 28px;
+  margin-right: 48px;
+}
+
+.lm .login-field input {
+  background: #f0f0eb;
+  font-size: 16px; /* stops iOS zooming in on focus */
+}
+
+@keyframes lm-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes lm-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lm,
+  .lm-sheet {
+    animation: none;
+  }
+}
