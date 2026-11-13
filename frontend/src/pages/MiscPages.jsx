@@ -3,6 +3,8 @@ import { PageHero, CTABand } from '../components/ui.jsx';
 import { Link } from '../lib/router.jsx';
 import { useSeo } from '../lib/seo.js';
 import { company } from '../data/site-data.js';
+import EnquiryForm from '../components/EnquiryForm.jsx';
+import '../home.css';
 
 const contactRows = (company) => [
   { label: 'Phone', value: 'Call us', href: `tel:${company.phoneHref}` },
@@ -56,6 +58,18 @@ export function ContactPage() {
                 <dd>{company.areaServed}</dd>
               </div>
             </dl>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec contact-enquiry">
+        <div className="w split">
+          <div>
+            <h2>Send us an enquiry.</h2>
+            <p className="lead">Tell us what you need and where. An engineer will call you back, usually within one working day.</p>
+          </div>
+          <div className="hm contact-enquiry-form">
+            <EnquiryForm />
           </div>
         </div>
       </section>

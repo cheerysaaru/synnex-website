@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from '../lib/api.js';
 import { Link } from '../lib/router.jsx';
 import ServicesStack from '../components/ServicesStack.jsx';
 import JobTimeline from '../components/JobTimeline.jsx';
 import LetterHero from '../components/LetterHero.jsx';
+import EnquiryForm from '../components/EnquiryForm.jsx';
 import '../letter-hero.css';
 import '../job-timeline.css';
 import '../home.css';
@@ -89,43 +90,6 @@ export default function HomePage({ t, en, phone, heroVideo = `${import.meta.env.
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [openFaq, setOpenFaq] = useState(0);
   const serviceNames = SERVICES.map((s, i) => tr(`service.${i + 1}`, s.title));
-  const blankForm = { name: '', email: '', phone: '', service: serviceNames[0], message: '' };
-  const [form, setForm] = useState(blankForm);
-  const [sent, setSent] = useState(false);
-  const formRef = useRef(null);
-  const thanksRef = useRef(null);
-  const [cardHeight, setCardHeight] = useState(0);
-  const [sending, setSending] = useState(false);
-  const [formError, setFormError] = useState('');
-
-  useEffect(() => {
-    if (sent && thanksRef.current) thanksRef.current.focus({ preventScroll: true });
-  }, [sent]);
-
-  const sendAnother = () => {
-    setSent(false);
-    setFormError('');
-  };
-
-  const updateForm = (event) => setForm({ ...form, [event.target.name]: event.target.value });
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setSending(true);
-    setFormError('');
-    setSent(false);
-    try {
-      await api.submitEnquiry({ ...form });
-      if (formRef.current) setCardHeight(formRef.current.offsetHeight);
-      setSent(true);
-      setForm(blankForm);
-    } catch (error) {
-      setFormError(error.message || tr('form.error', 'Could not send your enquiry. Please call us instead.'));
-    } finally {
-      setSending(false);
-    }
-  };
-
   return (
     <div className="hm">
       {/* ------------------------------------------------ hero */}
@@ -262,47 +226,7 @@ export default function HomePage({ t, en, phone, heroVideo = `${import.meta.env.
               <p className="hm-base">{tr('contact.base', 'Based in Colombo, working island-wide')}<br />{tr('contact.hours', 'Monday to Friday, 10am to 6pm')}</p>
             </div>
 
-            {sent ? (
-              <div className="hm-form hm-thanks" role="status" style={cardHeight ? { minHeight: cardHeight } : undefined}>
-                <span className="hm-thanks-tick" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
-                </span>
-                <h3 className="hm-thanks-title" tabIndex={-1} ref={thanksRef}>Thank you</h3>
-                <p className="hm-thanks-text">Your enquiry has been sent. We will call you back soon, usually within one working day.</p>
-                <button type="button" className="hm-thanks-again" onClick={sendAnother}>Submit another enquiry</button>
-              </div>
-            ) : (
-            <form className="hm-form" onSubmit={handleSubmit} ref={formRef}>
-              <label>
-                {tr('form.label.name', 'Your name')}
-                <input name="name" value={form.name} onChange={updateForm} placeholder={tr('form.placeholder.name', '')} required autoComplete="name" />
-              </label>
-              <div className="hm-form-pair">
-                <label>
-                  {tr('form.label.phone', 'Phone number')}
-                  <input name="phone" type="tel" value={form.phone} onChange={updateForm} placeholder={tr('form.placeholder.phone', '')} required autoComplete="tel" />
-                </label>
-                <label>
-                  {tr('form.label.email', 'Email address')}
-                  <input name="email" type="email" value={form.email} onChange={updateForm} placeholder={tr('form.placeholder.email', '')} required autoComplete="email" />
-                </label>
-              </div>
-              <label>
-                {tr('form.label.service', 'What do you need help with?')}
-                <select name="service" value={form.service} onChange={updateForm}>
-                  {serviceNames.map((name) => <option key={name} value={name}>{name}</option>)}
-                </select>
-              </label>
-              <label>
-                {tr('form.label.message', 'Tell us a little more')}
-                <textarea name="message" rows="3" value={form.message} onChange={updateForm} placeholder={tr('form.placeholder.message', '')} />
-              </label>
-              <button className="hm-pill hm-pill-dark" type="submit" disabled={sending}>
-                {sending ? tr('form.sending', 'Sending…') : tr('form.submit', 'Send enquiry')}
-              </button>
-              {formError ? <p className="hm-err" role="alert">{formError}</p> : null}
-            </form>
-            )}
+            <EnquiryForm services={serviceNames} tr={tr} />
           </div>
         </div>
       </section>
