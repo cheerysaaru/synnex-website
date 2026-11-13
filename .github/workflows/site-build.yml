@@ -1,0 +1,53 @@
+# Builds the website for https://synnex-technology.com and publishes the finished
+# files to the "site-build" branch. CyberPanel pulls that branch into public_html,
+# so the server only ever gets the built site (no source code, no backend files).
+name: Build site for synnex-technology.com
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: site-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        working-directory: frontend
+        run: npm install --no-audit --no-fund
+      - name: Build
+        working-directory: frontend
+        run: npm run build
+        env:
+          VITE_BASE: /
+          VITE_API_URL: https://api.synnex-technology.com/api
+      - name: Page links work when opened directly (.htaccess for OpenLiteSpeed)
+        working-directory: frontend
+        run: |
+          cat > dist/.htaccess <<'HTACCESS'
+          RewriteEngine On
+          RewriteBase /
+          RewriteRule ^index\.html$ - [L]
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteRule . /index.html [L]
+          HTACCESS
+      - name: Publish to the site-build branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: site-build
+          publish_dir: frontend/dist
+          force_orphan: true
+          commit_message: "Built site from ${{ github.sha }}"
