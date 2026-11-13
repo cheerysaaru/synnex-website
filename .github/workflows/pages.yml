@@ -34,7 +34,7 @@ jobs:
         env:
           VITE_BASE: /synnex-website/
           # public Web3Forms form key: enquiries are emailed to hello@synnex-technology.com
-          VITE_WEB3FORMS_KEY: dfc97231-314b-409d-b80f-60b761316d69
+          VITE_WEB3FORMS_KEY: be9f10b8-ecb7-4083-a895-0af2c573fe3e
       - name: Page links work when opened directly
         run: cp dist/index.html dist/404.html && touch dist/.nojekyll
       - uses: actions/upload-pages-artifact@v3
