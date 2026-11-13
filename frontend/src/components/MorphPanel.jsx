@@ -16,11 +16,11 @@ const U = (id) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&
 const IMG = {
   electrician: U('1621905251189-08b45d6a269e'), // electrician at a distribution board
   solar: U('1509391366360-2e959784a276'), // rooftop solar panels
-  team: '/images/nav/careers.webp', // team meeting
-  meeting: '/images/nav/news.webp', // laptop meeting
-  tools: '/images/nav/power.webp', // tools on technical drawings
-  office: '/images/nav/commercial.webp', // open office
-  ceiling: '/images/nav/industrial.webp', // office with ceiling lighting
+  team: `${import.meta.env.BASE_URL}images/nav/careers.webp`, // team meeting
+  meeting: `${import.meta.env.BASE_URL}images/nav/news.webp`, // laptop meeting
+  tools: `${import.meta.env.BASE_URL}images/nav/power.webp`, // tools on technical drawings
+  office: `${import.meta.env.BASE_URL}images/nav/commercial.webp`, // open office
+  ceiling: `${import.meta.env.BASE_URL}images/nav/industrial.webp`, // office with ceiling lighting
 };
 
 const COMPANY_IMG = {

@@ -16,7 +16,7 @@ const ZOOM_LETTER = 4; // the "E" in SYNNEX: its stem is a solid block to zoom i
 const clamp = (v, a = 0, b = 1) => Math.min(Math.max(v, a), b);
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
-export default function LetterHero({ video = '/city-lights.mp4' }) {
+export default function LetterHero({ video = `${import.meta.env.BASE_URL}city-lights.mp4` }) {
   const trackRef = useRef(null);
   const maskRef = useRef(null);
   const letterRef = useRef(null);

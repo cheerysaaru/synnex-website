@@ -78,7 +78,7 @@ function Icon({ name }) {
 const reducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-export default function HomePage({ t, en, phone, heroVideo = '/city-lights.mp4' }) {
+export default function HomePage({ t, en, phone, heroVideo = `${import.meta.env.BASE_URL}city-lights.mp4` }) {
   const tr = (key, fallback) => t[key] ?? en[key] ?? fallback;
 
   /* the home page owns its tab title (other pages set theirs with useSeo) */

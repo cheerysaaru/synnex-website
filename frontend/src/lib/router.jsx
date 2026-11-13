@@ -3,8 +3,21 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 
 const RouterContext = createContext(null);
 
+/* The site can live in a sub-folder (GitHub Pages: /synnex-website/).
+   App paths are always written from the root ('/', '/login'); BASE is
+   added when writing to the address bar and removed when reading it. */
+export const BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+
+const stripBase = (p) => {
+  const s = String(p || '/');
+  if (BASE && (s === BASE || s.startsWith(`${BASE}/`))) return s.slice(BASE.length) || '/';
+  return s;
+};
+
+export const withBase = (to) => (BASE && typeof to === 'string' && to.startsWith('/') ? `${BASE}${to}` : to);
+
 const normalize = (p) => {
-  const clean = String(p || '/').split('?')[0].replace(/\/+$/, '');
+  const clean = stripBase(String(p || '/').split('?')[0]).replace(/\/+$/, '');
   return clean || '/';
 };
 
@@ -30,7 +43,7 @@ export function RouterProvider({ children }) {
     }
     const url = new URL(to, window.location.origin);
     const samePath = normalize(url.pathname) === normalize(window.location.pathname);
-    window.history[replace ? 'replaceState' : 'pushState']({}, '', url.pathname + url.search + url.hash);
+    window.history[replace ? 'replaceState' : 'pushState']({}, '', withBase(url.pathname) + url.search + url.hash);
     setPath(normalize(url.pathname));
     if (samePath && url.hash) {
       const el = document.querySelector(url.hash);
@@ -65,7 +78,7 @@ export function Link({ to, children, onClick, ...rest }) {
     navigate(to);
   };
   return (
-    <a href={to} onClick={handle} {...rest}>
+    <a href={withBase(to)} onClick={handle} {...rest}>
       {children}
     </a>
   );

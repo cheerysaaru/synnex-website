@@ -25,14 +25,14 @@ export function LoginPage() {
       <div className="login-visual">
         <img
           className="login-poster"
-          src="/images/login-hero.jpg"
+          src={`${import.meta.env.BASE_URL}images/login-hero.jpg`}
           alt=""
           aria-hidden="true"
         />
         <video
           className="login-video"
-          src="/videos/login-hero.mp4"
-          poster="/images/login-hero.jpg"
+          src={`${import.meta.env.BASE_URL}videos/login-hero.mp4`}
+          poster={`${import.meta.env.BASE_URL}images/login-hero.jpg`}
           autoPlay
           muted
           loop

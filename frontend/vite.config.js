@@ -36,6 +36,8 @@ const spaFallback = () => ({
 });
 
 export default defineConfig({
+  // '/' locally; the GitHub Pages build sets VITE_BASE=/synnex-website/
+  base: process.env.VITE_BASE || '/',
   plugins: [react(), spaFallback()],
   server: {
     host: '0.0.0.0',
