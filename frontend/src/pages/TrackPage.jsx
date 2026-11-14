@@ -6,7 +6,7 @@
    each step was finished, the team's note, and site photos.
    Jobs are created and updated by the owner in /admin.
    ========================================================================== */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { PageHero } from '../components/ui.jsx';
 import { Link, useRouter } from '../lib/router.jsx';
 import { useSeo } from '../lib/seo.js';
@@ -234,11 +234,102 @@ function JobCard({ job, onOpenPhoto }) {
   );
 }
 
+/* Which job to open first: one waiting on a payment, then one in progress, then the newest. */
+function pickDefaultJob(jobs) {
+  const due = jobs.find((j) => jobStatus(j).tone === 'due');
+  const live = jobs.find((j) => jobStatus(j).tone === 'live');
+  return (due || live || jobs[0]).id;
+}
+
+/* Dropdown shown when a client has more than one job: one job is open at a time. */
+function JobPicker({ jobs, selectedId, onSelect }) {
+  const [open, setOpen] = useState(false);
+  const [focus, setFocus] = useState(0);
+  const wrapRef = useRef(null);
+  const listRef = useRef(null);
+  const selected = jobs.find((j) => j.id === selectedId) || jobs[0];
+  const status = jobStatus(selected);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onDown = (e) => { if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('pointerdown', onDown);
+    return () => document.removeEventListener('pointerdown', onDown);
+  }, [open]);
+
+  useEffect(() => {
+    if (open) listRef.current?.querySelectorAll('[role="option"]')[focus]?.focus();
+  }, [open, focus]);
+
+  const toggle = () => {
+    setFocus(Math.max(0, jobs.findIndex((j) => j.id === selected.id)));
+    setOpen((v) => !v);
+  };
+  const choose = (id) => { onSelect(id); setOpen(false); wrapRef.current?.querySelector('.tk-pick-btn')?.focus(); };
+  const onListKey = (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setFocus((f) => (f + 1) % jobs.length); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setFocus((f) => (f - 1 + jobs.length) % jobs.length); }
+    else if (e.key === 'Home') { e.preventDefault(); setFocus(0); }
+    else if (e.key === 'End') { e.preventDefault(); setFocus(jobs.length - 1); }
+    else if (e.key === 'Escape' || e.key === 'Tab') { setOpen(false); if (e.key === 'Escape') wrapRef.current?.querySelector('.tk-pick-btn')?.focus(); }
+  };
+
+  return (
+    <div className={`tk-pick${open ? ' is-open' : ''}`} ref={wrapRef}>
+      <div className="tk-pick-label">
+        <span>Your jobs</span>
+        <b className="tk-pick-count">{jobs.length}</b>
+      </div>
+      <button
+        type="button"
+        className="tk-pick-btn"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={toggle}
+        onKeyDown={(e) => { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (!open) toggle(); } }}
+      >
+        <span className="tk-pick-main">
+          <span className="tk-pick-title">{selected.title}</span>
+          <span className="tk-pick-sub">{[selected.location, `${selected.completed_steps} / ${JOB_STEPS.length}`].filter(Boolean).join(' · ')}</span>
+        </span>
+        <span className={`tk-status is-${status.tone}`}>{status.text}</span>
+        <svg className="tk-pick-chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+      {open ? (
+        <ul className="tk-pick-list" role="listbox" aria-label="Choose a job" ref={listRef} onKeyDown={onListKey}>
+          {jobs.map((job, i) => {
+            const st = jobStatus(job);
+            const isSel = job.id === selected.id;
+            return (
+              <li
+                key={job.id}
+                role="option"
+                aria-selected={isSel}
+                tabIndex={i === focus ? 0 : -1}
+                className={`tk-pick-opt${isSel ? ' is-selected' : ''}`}
+                onClick={() => choose(job.id)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(job.id); } }}
+              >
+                <span className="tk-pick-main">
+                  <span className="tk-pick-title">{job.title}</span>
+                  <span className="tk-pick-sub">{[job.location, `${job.completed_steps} / ${JOB_STEPS.length}`].filter(Boolean).join(' · ')}</span>
+                </span>
+                <span className={`tk-status is-${st.tone}`}>{st.text}</span>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
+    </div>
+  );
+}
+
 export function TrackPage() {
   const { user, ready } = useAuth();
   const [jobs, setJobs] = useState(null);
   const [error, setError] = useState('');
   const [photo, setPhoto] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
   const closePhoto = useCallback(() => setPhoto(null), []);
 
   useSeo({
@@ -252,7 +343,12 @@ export function TrackPage() {
     let active = true;
     setError('');
     api.myJobs()
-      .then((data) => { if (active) setJobs(data.jobs || []); })
+      .then((data) => {
+        if (!active) return;
+        const list = data.jobs || [];
+        setJobs(list);
+        setSelectedId((cur) => (list.some((j) => j.id === cur) ? cur : list.length ? pickDefaultJob(list) : null));
+      })
       .catch((err) => { if (active) setError(err.message || 'Could not load your jobs.'); });
     return () => { active = false; };
   }, [user]);
@@ -283,7 +379,11 @@ export function TrackPage() {
               </div>
             ) : null}
 
-            {jobs && jobs.map((job) => <JobCard key={job.id} job={job} onOpenPhoto={setPhoto} />)}
+            {jobs && jobs.length > 1 ? <JobPicker jobs={jobs} selectedId={selectedId} onSelect={setSelectedId} /> : null}
+            {jobs && jobs.length > 0 ? (() => {
+              const job = jobs.find((j) => j.id === selectedId) || jobs[0];
+              return <JobCard key={job.id} job={job} onOpenPhoto={setPhoto} />;
+            })() : null}
           </div>
         </section>
       )}
