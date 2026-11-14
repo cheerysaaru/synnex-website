@@ -20,6 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Session\Middleware\StartSession::class,
         ]);
 
+        // API visitors who are not logged in get a 401, not a redirect.
+        $middleware->redirectGuestsTo(fn ($request) => $request->is('api/*') ? null : '/login');
+
         $middleware->alias([
             'api.optional' => \App\Http\Middleware\ResolveApiUser::class,
             'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
@@ -27,5 +30,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // The API always answers in JSON (e.g. 401 when not logged in), never
+        // with a redirect to a login page that does not exist on the API.
+        $exceptions->shouldRenderJsonWhen(
+            fn ($request) => $request->is('api/*') || $request->expectsJson()
+        );
     })->create();

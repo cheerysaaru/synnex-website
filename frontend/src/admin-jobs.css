@@ -1,0 +1,114 @@
+/* ==========================================================================
+   Owner job manager in /admin (components/AdminJobs.jsx)
+   ========================================================================== */
+.aj { display: flex; flex-direction: column; gap: 22px; }
+.aj label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 500; color: #374151; }
+.aj input, .aj select, .aj textarea {
+  font: inherit;
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1px solid #d6d9de;
+  border-radius: 10px;
+  background: #fff;
+  color: #0b1220;
+  min-width: 0;
+}
+.aj textarea { resize: vertical; }
+.aj input:focus, .aj select:focus, .aj textarea:focus { outline: 2px solid #2563eb; outline-offset: 0; border-color: #2563eb; }
+.aj-small { min-height: 40px; padding: 0 16px; font-size: 14px; }
+
+/* new job form */
+.aj-new { background: #fff; border: 1px solid rgba(11, 18, 32, 0.08); border-radius: 20px; padding: 22px; }
+.aj-new h3 { margin: 0 0 14px; font-size: 18px; }
+.aj-new-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.aj-new-foot { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 16px; }
+.aj-hint { font-size: 13px; color: #6b7280; }
+.aj-ok { font-size: 14px; color: #15803d; font-weight: 500; }
+.aj-err { font-size: 14px; color: #b91c1c; font-weight: 500; }
+
+/* job list */
+.aj-list { display: flex; flex-direction: column; gap: 10px; }
+.aj-job { background: #fff; border: 1px solid rgba(11, 18, 32, 0.08); border-radius: 18px; overflow: hidden; }
+.aj-job.is-open { box-shadow: 0 24px 50px -34px rgba(11, 18, 32, 0.45); }
+.aj-job-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+.aj-job-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.aj-job-main strong { font-size: 16px; color: #0b1220; }
+.aj-job-main span { font-size: 13px; color: #6b7280; }
+.aj-badge { flex: none; font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: 999px; color: #1d4ed8; background: #dbeafe; }
+.aj-badge.is-done { color: #15803d; background: #dcfce7; }
+.aj-chev { flex: none; width: 26px; font-size: 22px; line-height: 1; color: #6b7280; text-align: center; }
+
+/* editor */
+.aj-editor { border-top: 1px solid #eef0f3; padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 18px; }
+.aj-details { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; align-items: end; }
+.aj-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.aj-step { display: grid; grid-template-columns: 40px 1fr; gap: 14px; padding: 14px; border-radius: 14px; background: #f7f8f6; }
+.aj-step.is-now { background: #eff6ff; }
+.aj-tick {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #c9cdd3;
+  background: #fff;
+  color: #6b7280;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.aj-tick:hover { border-color: #2563eb; color: #2563eb; }
+.is-done .aj-tick { background: #2563eb; border-color: #2563eb; color: #fff; }
+.is-now .aj-tick { border-color: #2563eb; color: #2563eb; }
+.aj-step-body { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.aj-step-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.aj-step-top strong { font-size: 15px; color: #0b1220; }
+.aj-state { font-size: 12px; color: #6b7280; }
+.is-done .aj-state { color: #1d4ed8; }
+
+.aj-photos { display: flex; flex-wrap: wrap; gap: 8px; }
+.aj-photo { position: relative; margin: 0; width: 96px; }
+.aj-photo img { width: 96px; height: 72px; object-fit: cover; border-radius: 8px; display: block; background: #e5e7eb; }
+.aj-photo figcaption { font-size: 11px; color: #6b7280; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.aj-photo button {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 0;
+  background: #0b1220;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+.aj-upload { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.aj-caption { flex: 1; min-width: 160px; }
+.aj-upload label.btn { flex-direction: row; cursor: pointer; }
+.aj-upload label.is-busy { opacity: 0.6; pointer-events: none; }
+
+.aj-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.aj-spacer { flex: 1; }
+.aj-link { border: 0; background: none; font: inherit; font-size: 14px; color: #374151; text-decoration: underline; cursor: pointer; padding: 4px; }
+.aj-link-danger { color: #b91c1c; }
+.aj-confirm { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: #b91c1c; flex-wrap: wrap; }
+.aj-danger { border: 0; border-radius: 999px; background: #b91c1c; color: #fff; font: inherit; font-size: 14px; font-weight: 600; padding: 8px 14px; cursor: pointer; }
+
+@media (max-width: 760px) {
+  .aj-details { grid-template-columns: 1fr; }
+  .aj-job-head { flex-wrap: wrap; }
+  .aj-badge { order: 3; }
+}

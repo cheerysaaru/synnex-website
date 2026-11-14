@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage.jsx';
 import SiteFooter from './components/SiteFooter.jsx';
 import LoginModal from './components/LoginModal.jsx';
 import ChatAssistant from './components/ChatAssistant.jsx';
+import { takeReturn } from './lib/afterLogin.js';
 
 const PHONE = '0777588128';
 
@@ -35,6 +36,7 @@ const NAV_T = {
     'nav.projects': 'Projects',
     'nav.resources': 'Resources',
     'nav.contact': 'Contact',
+    'nav.track': 'Track my job',
     'nav.login': 'Login',
     'nav.quote': 'Get a Quote',
     'nav.menu': 'Open menu',
@@ -488,6 +490,7 @@ const NAV_ITEMS = [
   { type: 'mega', key: 'solutions' },
   { type: 'link', key: 'projects', href: '/projects', label: 'nav.projects' },
   { type: 'mega', key: 'resources' },
+  { type: 'link', key: 'track', href: '/track', label: 'nav.track' },
   { type: 'link', key: 'contact', href: '/contact', label: 'nav.contact' },
 ];
 
@@ -997,12 +1000,12 @@ function App() {
 
   const closeLogin = useCallback(() => {
     setLoginPopup(null);
-    if (popupRoute) navigate('/', { replace: true });
+    if (popupRoute) navigate(takeReturn('/'), { replace: true });
   }, [popupRoute, navigate]);
 
   const loginDone = useCallback(() => {
     setLoginPopup(null);
-    if (popupRoute) navigate('/', { replace: true });
+    if (popupRoute) navigate(takeReturn('/'), { replace: true });
   }, [popupRoute, navigate]);
 
   const [lang, setLang] = useState(() => {

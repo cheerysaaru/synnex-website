@@ -8,6 +8,7 @@ import { CaseStudiesPage, CaseStudyPage } from './CaseStudyPages.jsx';
 import { ContactPage, NotFoundPage } from './MiscPages.jsx';
 import { LoginPage } from './LoginPage.jsx';
 import { PortalPage } from './PortalPage.jsx';
+import { TrackPage } from './TrackPage.jsx';
 import { AdminPage } from './AdminPage.jsx';
 
 export function PageRoutes() {
@@ -42,6 +43,7 @@ export function PageRoutes() {
 
   if (path === '/login' || path === '/register') return <LoginPage />;
   if (path === '/portal') return <PortalPage />;
+  if (path === '/track') return <TrackPage />;
   if (path === '/admin') return <AdminPage />;
 
   /* Nav compatibility: /projects and /contact must resolve too. */
