@@ -287,3 +287,4 @@ html body .site .tk-pay h2 { margin: 0 0 16px; font-size: 24px; max-width: none;
   .tk-gate-item::before { left: 15px; top: 34px; }
   .tk-pay { padding: 22px 18px; }
 }
+html body .site .tk-job-title { max-width: none; }
