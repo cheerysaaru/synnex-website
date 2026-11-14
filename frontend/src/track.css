@@ -51,6 +51,7 @@
   box-shadow: 0 30px 60px -40px rgba(11, 18, 32, 0.45);
 }
 .tk-job-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.tk-job-head > div { flex: 1; min-width: 0; }
 .tk-job-title { margin: 0; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.15; }
 .tk-job-meta { margin: 6px 0 0; color: #6b7280; font-size: 15px; }
 .tk-status {

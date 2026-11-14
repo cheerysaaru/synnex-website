@@ -36,6 +36,9 @@ class ClientJobTrackingTest extends TestCase
     public function test_guests_cannot_see_jobs(): void
     {
         $this->getJson('/api/my/jobs')->assertStatus(401);
+        // Even without an Accept header the API answers 401 in JSON (no redirect / 500).
+        $this->get('/api/my/jobs')->assertStatus(401)->assertJson(['message' => 'Unauthenticated.']);
+        $this->get('/api/admin/jobs')->assertStatus(401);
     }
 
     public function test_admin_creates_job_and_client_sees_only_their_own(): void
