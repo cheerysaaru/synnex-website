@@ -54,7 +54,52 @@ class AdminJobController extends Controller
             'completed_steps' => ['sometimes', 'integer', 'min:0', 'max:'.ClientJob::STEPS],
             'step_notes' => ['sometimes', 'array', 'max:'.ClientJob::STEPS],
             'step_notes.*' => ['nullable', 'string', 'max:1000'],
+            'quote_amount' => ['sometimes', 'nullable', 'integer', 'min:0', 'max:100000000000'],
+            'deposit_percent' => ['sometimes', 'integer', 'min:0', 'max:100'],
+            'deposit_paid' => ['sometimes', 'boolean'],
+            'final_paid' => ['sometimes', 'boolean'],
         ]);
+
+        // ---- payments: mark received / not received
+        if (array_key_exists('final_paid', $data)) {
+            if ($data['final_paid']) {
+                $data['final_paid_at'] = $job->final_paid_at ?? now()->toDateString();
+                // full payment includes the deposit
+                $data['deposit_paid_at'] = $job->deposit_paid_at ?? now()->toDateString();
+            } else {
+                if ($job->completed_steps >= ClientJob::STEPS) {
+                    abort(422, 'Untick Handover before marking the final payment as not received.');
+                }
+                $data['final_paid_at'] = null;
+            }
+            unset($data['final_paid']);
+        }
+        if (array_key_exists('deposit_paid', $data)) {
+            if ($data['deposit_paid']) {
+                $data['deposit_paid_at'] = $data['deposit_paid_at'] ?? $job->deposit_paid_at ?? now()->toDateString();
+            } else {
+                if ($job->completed_steps > ClientJob::DEPOSIT_GATE) {
+                    abort(422, 'Untick the later steps before marking the deposit as not received.');
+                }
+                if (($data['final_paid_at'] ?? $job->final_paid_at) !== null) {
+                    abort(422, 'The final payment is marked as received. Unmark it first.');
+                }
+                $data['deposit_paid_at'] = null;
+            }
+            unset($data['deposit_paid']);
+        }
+
+        // ---- steps cannot go past an unpaid checkpoint
+        if (array_key_exists('completed_steps', $data)) {
+            $preview = $job->replicate();
+            $preview->fill(array_intersect_key($data, array_flip(['deposit_paid_at', 'final_paid_at'])));
+            $max = $preview->maxCompletableSteps();
+            if ($data['completed_steps'] > $max) {
+                abort(422, $max < ClientJob::FINAL_GATE
+                    ? 'Mark the deposit as received before starting the work.'
+                    : 'Mark the final payment as received before handover.');
+            }
+        }
 
         if (array_key_exists('step_notes', $data)) {
             $notes = [];

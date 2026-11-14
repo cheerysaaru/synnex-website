@@ -13,10 +13,13 @@ import { useSeo } from '../lib/seo.js';
 import { useAuth } from '../lib/auth.jsx';
 import { api, apiUrl } from '../lib/api.js';
 import { rememberReturn } from '../lib/afterLogin.js';
-import { JOB_STEPS, stepState, formatStepDate } from '../lib/jobSteps.js';
+import { JOB_STEPS, formatStepDate } from '../lib/jobSteps.js';
+import { BANK, formatLKR, paymentGates, stepStateWithPayments, jobStatus, DEPOSIT_GATE, FINAL_GATE } from '../lib/payment.js';
+import { company } from '../data/site-data.js';
 import '../track.css';
 
-const STATE_LABEL = { done: 'Done', now: 'In progress', next: 'Up next' };
+const STATE_LABEL = { done: 'Done', now: 'In progress', next: 'Up next', locked: 'Locked' };
+const LOCK_HINT = { deposit: 'Starts after the deposit is paid', final: 'After the full payment is received' };
 
 function Tick() {
   return (
@@ -77,11 +80,100 @@ function Lightbox({ photo, onClose }) {
   );
 }
 
+function PaymentDialog({ job, gate, onClose }) {
+  const [copied, setCopied] = useState(false);
+  const title = gate.kind === 'deposit' ? 'Pay your deposit' : 'Pay the final balance';
+  const amount = formatLKR(gate.amount);
+
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  const details = `${BANK.bank}\nAccount name: ${BANK.holder}\nAccount number: ${BANK.account}\nAmount: ${amount}\nReference: ${gate.reference}`;
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(details);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
+  const message = `Hello Synnex, I have paid ${amount} for "${job.title}". Reference: ${gate.reference}. Receipt attached.`;
+
+  return (
+    <div className="tk-pay-overlay" role="dialog" aria-modal="true" aria-label={title} onClick={onClose}>
+      <div className="tk-pay" onClick={(e) => e.stopPropagation()}>
+        <button type="button" className="tk-pay-close" onClick={onClose} aria-label="Close">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+        <h2>{title}</h2>
+        <dl className="tk-pay-sum">
+          <div><dt>Amount</dt><dd className="tk-pay-amount">{amount}</dd></div>
+          <div><dt>Reference</dt><dd><b>{gate.reference}</b></dd></div>
+        </dl>
+        <div className="tk-pay-bank">
+          <span className="tk-pay-label">Bank transfer</span>
+          <dl>
+            <div><dt>Bank</dt><dd>{BANK.bank}</dd></div>
+            <div><dt>Account name</dt><dd>{BANK.holder}</dd></div>
+            <div><dt>Account number</dt><dd><b>{BANK.account}</b></dd></div>
+          </dl>
+        </div>
+        <p className="tk-pay-note">Please write the reference on your transfer, then send us the receipt. We confirm payments within one working day and your next steps unlock.</p>
+        <div className="tk-pay-actions">
+          <a className="btn" href={`https://wa.me/${company.whatsapp}?text=${encodeURIComponent(message)}`} target="_blank" rel="noreferrer">Send receipt on WhatsApp</a>
+          <button type="button" className="btn ghost" onClick={copy}>{copied ? 'Copied' : 'Copy details'}</button>
+        </div>
+        <p className="tk-pay-small">Or email the receipt to <a href={`${company.emailHref}?subject=${encodeURIComponent(`Payment ${gate.reference}`)}`}>{company.email}</a></p>
+      </div>
+    </div>
+  );
+}
+
+function PaymentCheckpoint({ gate, onPay }) {
+  const label = gate.kind === 'deposit' ? `Deposit (${gate.percent}%)` : `Final payment (${gate.percent}%)`;
+  const hint = {
+    due: gate.kind === 'deposit' ? 'Payment due. Work starts once we receive it.' : 'Payment due before handover.',
+    upcoming: gate.kind === 'deposit' ? 'Due after the quote is approved.' : 'Due before handover.',
+    paid: `Paid ${formatStepDate(gate.paidAt)}`,
+  }[gate.state];
+
+  return (
+    <li className={`tk-gate-item is-${gate.state}`}>
+      <span className="tk-coin" aria-hidden="true">
+        {gate.state === 'paid' ? <Tick /> : (
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="6" width="18" height="13" rx="2" /><path d="M3 10h18M7 15h3" /></svg>
+        )}
+      </span>
+      <div className="tk-gate-card">
+        <div className="tk-gate-top">
+          <strong>{label}</strong>
+          {gate.amount !== null ? <span className="tk-gate-amount">{formatLKR(gate.amount)}</span> : null}
+        </div>
+        <span className="tk-gate-hint">{hint}</span>
+        {gate.state === 'due' && gate.amount !== null ? (
+          <button type="button" className="btn tk-pay-btn" onClick={() => onPay(gate)}>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2" /><path d="M3 10h18" /></svg>
+            Payment
+          </button>
+        ) : null}
+        {gate.state === 'due' && gate.amount === null ? <span className="tk-gate-hint">We will add the amount shortly.</span> : null}
+      </div>
+    </li>
+  );
+}
+
 function JobCard({ job, onOpenPhoto }) {
   const done = job.completed_steps;
-  const finished = done >= JOB_STEPS.length;
-  const status = finished ? 'Completed' : JOB_STEPS[done];
-  const meta = [job.location, job.service].filter(Boolean).join(' · ');
+  const status = jobStatus(job);
+  const gates = paymentGates(job);
+  const [paying, setPaying] = useState(null);
+  const closePay = useCallback(() => setPaying(null), []);
+  const quote = job.payment?.quote_amount;
+  const meta = [job.location, job.service, quote ? `Quote ${formatLKR(quote)}` : null].filter(Boolean).join(' · ');
 
   return (
     <article className="tk-job">
@@ -90,7 +182,7 @@ function JobCard({ job, onOpenPhoto }) {
           <h2 className="tk-job-title">{job.title}</h2>
           {meta ? <p className="tk-job-meta">{meta}</p> : null}
         </div>
-        <span className={`tk-status${finished ? ' is-done' : ''}`}>{status}</span>
+        <span className={`tk-status is-${status.tone}`}>{status.text}</span>
       </header>
 
       <div className="tk-progress" aria-label={`${done} / ${JOB_STEPS.length}`}>
@@ -100,19 +192,25 @@ function JobCard({ job, onOpenPhoto }) {
 
       <ol className="tk-steps">
         {JOB_STEPS.map((title, i) => {
-          const state = finished ? 'done' : stepState(i, done);
+          const state = stepStateWithPayments(i, job);
+          const lockHint = state === 'locked' ? LOCK_HINT[i === FINAL_GATE ? 'final' : 'deposit'] : '';
           const photos = job.photos.filter((p) => p.step === i);
           const note = job.step_notes[i];
           const date = formatStepDate(job.step_dates[i]);
-          return (
+          const step = (
             <li key={title} className={`tk-step is-${state}`}>
-              <span className="tk-dot" aria-hidden="true">{state === 'done' ? <Tick /> : <b>{i + 1}</b>}</span>
+              <span className="tk-dot" aria-hidden="true">
+                {state === 'done' ? <Tick /> : state === 'locked' ? (
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>
+                ) : <b>{i + 1}</b>}
+              </span>
               <div className="tk-step-body">
                 <div className="tk-step-top">
                   <h3>{title}</h3>
                   <span className={`tk-tag tk-tag-${state}`}>{STATE_LABEL[state]}</span>
                   {date ? <time className="tk-date">{date}</time> : null}
                 </div>
+                {lockHint ? <p className="tk-lock-hint">{lockHint}</p> : null}
                 {note ? <p className="tk-note">{note}</p> : null}
                 {photos.length ? (
                   <div className="tk-photos">
@@ -126,8 +224,12 @@ function JobCard({ job, onOpenPhoto }) {
               </div>
             </li>
           );
+          if (i === DEPOSIT_GATE - 1) return [step, <PaymentCheckpoint key="deposit" gate={gates.deposit} onPay={setPaying} />];
+          if (i === FINAL_GATE) return [<PaymentCheckpoint key="final" gate={gates.final} onPay={setPaying} />, step];
+          return step;
         })}
       </ol>
+      {paying ? <PaymentDialog job={job} gate={paying} onClose={closePay} /> : null}
     </article>
   );
 }

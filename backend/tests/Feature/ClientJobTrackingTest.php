@@ -75,6 +75,7 @@ class ClientJobTrackingTest extends TestCase
         $job = ClientJob::create(['user_id' => $client->id, 'title' => 'Rewiring']);
 
         $res = $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", [
+            'deposit_paid' => true,
             'completed_steps' => 2,
             'step_notes' => ['Quote signed', '  Site checked  ', '', null, null],
         ])->assertOk()->json('job');
@@ -147,5 +148,60 @@ class ClientJobTrackingTest extends TestCase
         Storage::disk('local')->assertExists($path);
         $this->as($admin)->deleteJson("/api/admin/jobs/{$job->id}")->assertOk();
         Storage::disk('local')->assertMissing($path);
+    }
+
+    public function test_payment_checkpoints_block_the_steps(): void
+    {
+        $admin = $this->user('owner', true);
+        $client = $this->user('nimal');
+        $job = ClientJob::create(['user_id' => $client->id, 'title' => 'Solar']);
+
+        // amounts: 25% deposit by default
+        $pay = $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", ['quote_amount' => 1240000])
+            ->assertOk()->json('job.payment');
+        $this->assertSame(310000, $pay['deposit_amount']);
+        $this->assertSame(930000, $pay['balance_amount']);
+        $this->assertSame('SYX-'.str_pad((string) $job->id, 4, '0', STR_PAD_LEFT).'-D', $pay['deposit_reference']);
+
+        // per-client deposit percentage
+        $pay = $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", ['deposit_percent' => 50])->json('job.payment');
+        $this->assertSame(620000, $pay['deposit_amount']);
+
+        // quote approved is allowed, but work cannot start before the deposit
+        $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", ['completed_steps' => 1])->assertOk();
+        $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", ['completed_steps' => 2])
+            ->assertStatus(422)->assertJson(['message' => 'Mark the deposit as received before starting the work.']);
+
+        // deposit received -> up to Testing, but not Handover
+        $res = $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", ['deposit_paid' => true, 'completed_steps' => 4])->assertOk()->json('job');
+        $this->assertSame(4, $res['completed_steps']);
+        $this->assertNotNull($res['payment']['deposit_paid_at']);
+        $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", ['completed_steps' => 5])
+            ->assertStatus(422)->assertJson(['message' => 'Mark the final payment as received before handover.']);
+
+        // cannot unmark the deposit while later steps are ticked
+        $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", ['deposit_paid' => false])->assertStatus(422);
+
+        // final payment received -> handover allowed
+        $res = $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", ['final_paid' => true])->assertOk()->json('job');
+        $this->assertNotNull($res['payment']['final_paid_at']);
+        $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", ['completed_steps' => 5])->assertOk();
+        $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", ['final_paid' => false])->assertStatus(422);
+
+        // the client sees the payment info too
+        $this->as($client)->getJson('/api/my/jobs')
+            ->assertJsonPath('jobs.0.payment.deposit_amount', 620000)
+            ->assertJsonPath('jobs.0.completed_steps', 5);
+    }
+
+    public function test_full_payment_at_once_marks_the_deposit_too(): void
+    {
+        $admin = $this->user('owner', true);
+        $client = $this->user('nimal');
+        $job = ClientJob::create(['user_id' => $client->id, 'title' => 'Rewiring', 'quote_amount' => 100000]);
+
+        $res = $this->as($admin)->patchJson("/api/admin/jobs/{$job->id}", ['final_paid' => true, 'completed_steps' => 5])->assertOk()->json('job');
+        $this->assertNotNull($res['payment']['deposit_paid_at']);
+        $this->assertSame(5, $res['completed_steps']);
     }
 }

@@ -7,7 +7,8 @@
    ========================================================================== */
 import { useEffect, useState } from 'react';
 import { api, apiUrl } from '../lib/api.js';
-import { JOB_STEPS, stepState, formatStepDate } from '../lib/jobSteps.js';
+import { JOB_STEPS, formatStepDate } from '../lib/jobSteps.js';
+import { formatLKR, paymentGates, stepStateWithPayments, jobStatus, FINAL_GATE } from '../lib/payment.js';
 import '../admin-jobs.css';
 
 const SERVICES = [
@@ -40,6 +41,8 @@ async function shrinkPhoto(file, max = 1600) {
 function JobEditor({ job, onChange, onDeleted }) {
   const [details, setDetails] = useState({ title: job.title, location: job.location || '', service: job.service || '' });
   const [notes, setNotes] = useState(job.step_notes.map((n) => n || ''));
+  const [quote, setQuote] = useState(job.payment?.quote_amount ?? '');
+  const [percent, setPercent] = useState(job.payment?.deposit_percent ?? 25);
   const [captions, setCaptions] = useState(['', '', '', '', '']);
   const [busy, setBusy] = useState('');
   const [msg, setMsg] = useState('');
@@ -49,6 +52,8 @@ function JobEditor({ job, onChange, onDeleted }) {
   useEffect(() => {
     setDetails({ title: job.title, location: job.location || '', service: job.service || '' });
     setNotes(job.step_notes.map((n) => n || ''));
+    setQuote(job.payment?.quote_amount ?? '');
+    setPercent(job.payment?.deposit_percent ?? 25);
   }, [job.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const run = async (label, fn, okText) => {
@@ -70,6 +75,17 @@ function JobEditor({ job, onChange, onDeleted }) {
     const completed = i < job.completed_steps ? i : i + 1;
     run(`step${i}`, () => api.updateJob(job.id, { completed_steps: completed }));
   };
+
+  const gates = paymentGates(job);
+  const savePayment = () => run('payment', () => api.updateJob(job.id, {
+    quote_amount: quote === '' ? null : Math.round(Number(quote)),
+    deposit_percent: Math.round(Number(percent) || 0),
+  }), 'Payment details saved');
+  const setPaid = (kind, value) => run(`paid-${kind}`, () => api.updateJob(job.id, { [`${kind}_paid`]: value }),
+    value ? (kind === 'deposit' ? 'Deposit marked as received' : 'Final payment marked as received') : 'Marked as not received');
+  const previewDeposit = quote === '' ? null : Math.round((Number(quote) * Number(percent || 0)) / 100);
+  const previewBalance = quote === '' ? null : Math.round(Number(quote)) - previewDeposit;
+  const paymentChanged = String(quote) !== String(job.payment?.quote_amount ?? '') || Number(percent) !== Number(job.payment?.deposit_percent ?? 25);
 
   const saveNotes = () => run('notes', () => api.updateJob(job.id, { step_notes: notes }), 'Notes saved');
   const saveDetails = () => run('details', () => api.updateJob(job.id, details), 'Details saved');
@@ -120,9 +136,42 @@ function JobEditor({ job, onChange, onDeleted }) {
         </button>
       </div>
 
+      <div className="aj-pay">
+        <div className="aj-pay-inputs">
+          <label>Quote amount (LKR)
+            <input type="number" min="0" step="1" inputMode="numeric" placeholder="1240000" value={quote} onChange={(e) => setQuote(e.target.value)} />
+          </label>
+          <label>Deposit %
+            <input type="number" min="0" max="100" step="1" value={percent} onChange={(e) => setPercent(e.target.value)} />
+          </label>
+          <button type="button" className="btn ghost aj-small" onClick={savePayment} disabled={busy === 'payment' || !paymentChanged}>
+            {busy === 'payment' ? 'Saving…' : paymentChanged ? 'Save payment' : 'Saved'}
+          </button>
+        </div>
+        <div className="aj-pay-rows">
+          <label className={`aj-switch${gates.depositPaid ? ' is-on' : ''}`}>
+            <input type="checkbox" checked={gates.depositPaid} disabled={busy.startsWith('paid')} onChange={(e) => setPaid('deposit', e.target.checked)} />
+            <span className="aj-switch-ui" aria-hidden="true" />
+            <span className="aj-switch-text">
+              <b>Deposit received</b>
+              <em>{percent || 0}% · {previewDeposit !== null ? formatLKR(previewDeposit) : 'set the quote amount'}{gates.depositPaid ? ` · ${formatStepDate(gates.deposit.paidAt)}` : ''} · Ref {job.payment?.deposit_reference}</em>
+            </span>
+          </label>
+          <label className={`aj-switch${gates.finalPaid ? ' is-on' : ''}`}>
+            <input type="checkbox" checked={gates.finalPaid} disabled={busy.startsWith('paid')} onChange={(e) => setPaid('final', e.target.checked)} />
+            <span className="aj-switch-ui" aria-hidden="true" />
+            <span className="aj-switch-text">
+              <b>Final payment received</b>
+              <em>{100 - (Number(percent) || 0)}% · {previewBalance !== null ? formatLKR(previewBalance) : 'set the quote amount'}{gates.finalPaid ? ` · ${formatStepDate(gates.final.paidAt)}` : ''} · Ref {job.payment?.final_reference}</em>
+            </span>
+          </label>
+        </div>
+      </div>
+
       <ol className="aj-steps">
         {JOB_STEPS.map((title, i) => {
-          const state = stepState(i, job.completed_steps);
+          const state = stepStateWithPayments(i, job);
+          const locked = state === 'locked';
           const photos = job.photos.filter((p) => p.step === i);
           return (
             <li key={title} className={`aj-step is-${state}`}>
@@ -130,16 +179,16 @@ function JobEditor({ job, onChange, onDeleted }) {
                 type="button"
                 className="aj-tick"
                 onClick={() => toggleStep(i)}
-                disabled={busy.startsWith('step')}
+                disabled={busy.startsWith('step') || locked}
                 aria-pressed={state === 'done'}
-                title={state === 'done' ? 'Untick this step' : 'Mark this step done'}
+                title={locked ? (i === FINAL_GATE ? 'Mark the final payment as received first' : 'Mark the deposit as received first') : state === 'done' ? 'Untick this step' : 'Mark this step done'}
               >
-                {state === 'done' ? '✓' : i + 1}
+                {state === 'done' ? '✓' : locked ? '🔒' : i + 1}
               </button>
               <div className="aj-step-body">
                 <div className="aj-step-top">
                   <strong>{title}</strong>
-                  <span className="aj-state">{state === 'done' ? `Done ${formatStepDate(job.step_dates[i])}` : state === 'now' ? 'In progress' : 'Not started'}</span>
+                  <span className="aj-state">{state === 'done' ? `Done ${formatStepDate(job.step_dates[i])}` : locked ? (i === FINAL_GATE ? 'Locked until the final payment' : 'Locked until the deposit') : state === 'now' ? 'In progress' : 'Not started'}</span>
                 </div>
                 <textarea
                   rows={2}
@@ -270,7 +319,7 @@ export default function AdminJobs() {
       <div className="aj-list">
         {jobs && jobs.map((job) => {
           const open = openId === job.id;
-          const finished = job.completed_steps >= JOB_STEPS.length;
+          const status = jobStatus(job);
           return (
             <article key={job.id} className={`aj-job${open ? ' is-open' : ''}`}>
               <button type="button" className="aj-job-head" onClick={() => setOpenId(open ? null : job.id)} aria-expanded={open}>
@@ -278,8 +327,8 @@ export default function AdminJobs() {
                   <strong>{job.title}</strong>
                   <span>{job.client ? `${job.client.name} (@${job.client.username})` : 'Unknown client'}{job.location ? ` · ${job.location}` : ''}</span>
                 </span>
-                <span className={`aj-badge${finished ? ' is-done' : ''}`}>
-                  {finished ? 'Completed' : `${job.completed_steps}/5 · ${JOB_STEPS[job.completed_steps]}`}
+                <span className={`aj-badge is-${status.tone}`}>
+                  {status.tone === 'done' ? 'Completed' : `${job.completed_steps}/5 · ${status.text}`}
                 </span>
                 <span className="aj-chev" aria-hidden="true">{open ? '−' : '+'}</span>
               </button>
