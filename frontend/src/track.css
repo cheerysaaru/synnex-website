@@ -175,3 +175,16 @@
   .tk-progress-bar i, .tk-photo img { transition: none; }
   .tk-lightbox { animation: none; }
 }
+
+/* headings in the two cards: full width and centred (overrides the site-wide
+   heading width limit) */
+html body .site .tk-gate h2,
+html body .site .tk-empty h2 {
+  max-width: none;
+  width: 100%;
+  margin: 0 auto 12px;
+  text-align: center;
+  text-wrap: balance;
+}
+html body .site .tk-gate p,
+html body .site .tk-empty p { text-align: center; }
