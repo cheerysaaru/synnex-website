@@ -37,8 +37,8 @@ export function CookiesPage() {
       <section className="sec">
         <div className="w ckp">
           <h2>Cookies we use</h2>
-          <div className="ckp-table-wrap">
-            <table className="ckp-table">
+          <div className="sckp-table-wrap">
+            <table className="sckp-table">
               <thead><tr><th>Name</th><th>What it does</th><th>Type</th><th>How long</th></tr></thead>
               <tbody>
                 {ROWS.map(([name, what, type, time]) => (
@@ -51,19 +51,19 @@ export function CookiesPage() {
 
           <h2>Your choice</h2>
           <p>Essential cookies are needed for logging in and for the site to work safely. You can change your choice at any time.</p>
-          <div className="ckp-choice">
-            <span className="ckp-current">
+          <div className="sckp-choice">
+            <span className="sckp-current">
               Your choice: <b>{choice === 'all' ? 'Accept all' : choice === 'essential' ? 'Essential only' : 'Not chosen yet'}</b>
             </span>
-            <button type="button" className="ck-btn ck-btn-primary" style={{ flex: 'none' }} onClick={() => choose('all')}>Accept all</button>
-            <button type="button" className="ck-btn ck-btn-ghost" style={{ flex: 'none' }} onClick={() => choose('essential')}>Essential only</button>
+            <button type="button" className="sck-btn sck-btn-primary" style={{ flex: 'none' }} onClick={() => choose('all')}>Accept all</button>
+            <button type="button" className="sck-btn sck-btn-ghost" style={{ flex: 'none' }} onClick={() => choose('essential')}>Essential only</button>
           </div>
 
           <h2>Questions</h2>
           <p>Questions about cookies or your data? Get in touch.</p>
-          <div className="ckp-choice">
+          <div className="sckp-choice">
             <Link className="btn" to="/contact">Contact us</Link>
-            <a className="ck-link" style={{ marginTop: 0 }} href={company.emailHref}>{company.email}</a>
+            <a className="sck-link" style={{ marginTop: 0 }} href={company.emailHref}>{company.email}</a>
           </div>
         </div>
       </section>
