@@ -288,3 +288,50 @@ html body .site .tk-pay h2 { margin: 0 0 16px; font-size: 24px; max-width: none;
   .tk-pay { padding: 22px 18px; }
 }
 html body .site .tk-job-title { max-width: none; }
+
+/* ---------- job picker (clients with more than one job) ---------- */
+.tk-pick { position: relative; margin-bottom: 18px; z-index: 5; }
+.tk-pick-label { display: flex; align-items: center; gap: 8px; margin: 0 0 8px 4px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #6b7280; }
+.tk-pick-count { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 7px; border-radius: 999px; background: #2563eb; color: #fff; font-size: 12px; letter-spacing: 0; }
+.tk-pick-btn {
+  width: 100%;
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px 14px 20px;
+  text-align: left; font: inherit; color: inherit;
+  background: #fff;
+  border: 1.5px solid rgba(11, 18, 32, 0.12);
+  border-radius: 18px;
+  box-shadow: 0 14px 30px -24px rgba(11, 18, 32, 0.5);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.tk-pick-btn:hover, .tk-pick.is-open .tk-pick-btn { border-color: #2563eb; }
+.tk-pick-btn:focus-visible { outline: none; border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18); }
+.tk-pick-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.tk-pick-title { font-weight: 600; font-size: 17px; color: #0b1220; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tk-pick-sub { font-size: 13px; color: #6b7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tk-pick-chev { flex: none; color: #2563eb; transition: transform 0.2s; }
+.tk-pick.is-open .tk-pick-chev { transform: rotate(180deg); }
+.tk-pick-list {
+  position: absolute; left: 0; right: 0; top: calc(100% + 8px);
+  margin: 0; padding: 6px; list-style: none;
+  max-height: min(60vh, 380px); overflow-y: auto;
+  background: #fff;
+  border: 1px solid rgba(11, 18, 32, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 30px 60px -20px rgba(11, 18, 32, 0.35);
+  animation: tkFade 0.15s ease-out;
+}
+.tk-pick-opt { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 12px; cursor: pointer; }
+.tk-pick-opt:hover, .tk-pick-opt:focus-visible { outline: none; background: #f1f5ff; }
+.tk-pick-opt.is-selected { background: #eff6ff; box-shadow: inset 3px 0 0 #2563eb; }
+.tk-pick .tk-status { padding: 5px 11px; font-size: 12px; }
+@media (max-width: 560px) {
+  .tk-pick-btn { padding: 12px 12px 12px 14px; gap: 10px; flex-wrap: wrap; }
+  .tk-pick-btn .tk-pick-main { flex-basis: calc(100% - 34px); }
+  .tk-pick-btn .tk-status { order: 3; }
+  .tk-pick-chev { order: 2; }
+  .tk-pick-opt { flex-wrap: wrap; gap: 8px; }
+  .tk-pick-opt .tk-pick-main { flex-basis: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .tk-pick-list { animation: none; } .tk-pick-chev { transition: none; } }
