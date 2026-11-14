@@ -5,6 +5,8 @@ import { useAuth } from './lib/auth.jsx';
 import { PageRoutes } from './pages/PageRoutes.jsx';
 import HomePage from './pages/HomePage.jsx';
 import SiteFooter from './components/SiteFooter.jsx';
+import CookieConsent from './components/CookieConsent.jsx';
+import './cookie-consent.css';
 import LoginModal from './components/LoginModal.jsx';
 import ChatAssistant from './components/ChatAssistant.jsx';
 import { takeReturn } from './lib/afterLogin.js';
@@ -1098,6 +1100,7 @@ function App() {
       ) : null}
 
       {!isLogin ? <ChatAssistant /> : null}
+      <CookieConsent />
 
       <LoginModal
         open={Boolean(loginPopup) || popupRoute}

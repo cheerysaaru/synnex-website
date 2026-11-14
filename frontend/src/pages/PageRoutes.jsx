@@ -10,6 +10,7 @@ import { LoginPage } from './LoginPage.jsx';
 import { PortalPage } from './PortalPage.jsx';
 import { TrackPage } from './TrackPage.jsx';
 import { AdminPage } from './AdminPage.jsx';
+import { CookiesPage } from './CookiesPage.jsx';
 
 export function PageRoutes() {
   const { path } = useRouter();
@@ -45,6 +46,7 @@ export function PageRoutes() {
   if (path === '/portal') return <PortalPage />;
   if (path === '/track') return <TrackPage />;
   if (path === '/admin') return <AdminPage />;
+  if (path === '/cookies') return <CookiesPage />;
 
   /* Nav compatibility: /projects and /contact must resolve too. */
   if (path === '/projects') return <CaseStudiesPage />;
