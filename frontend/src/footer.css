@@ -175,8 +175,12 @@ body footer.ft {
 
 .ft-bottom-links {
   display: flex;
-  gap: 22px;
+  flex-wrap: wrap;
+  gap: 10px 22px;
 }
+/* the giant wordmark overlaps the bottom bar: keep the links clickable */
+.ft-bottom { position: relative; z-index: 1; }
+.ft-wordmark { pointer-events: none; }
 
 /* ---------- giant wordmark */
 
