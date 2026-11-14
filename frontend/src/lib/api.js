@@ -7,6 +7,9 @@
 
 const BASE = (import.meta.env.VITE_API_URL || '/api').replace(/\/+$/, '');
 
+/** Full address of a file the API serves, e.g. a job photo ("/job-photos/3"). */
+export const apiUrl = (path) => `${BASE}${path}`;
+
 let csrfToken = null;
 let csrfRequest = null;
 
@@ -54,8 +57,9 @@ function ensureCsrf() {
 async function request(path, { method = 'GET', body, csrf = false, retryOn419 = true } = {}) {
   if (csrf) await ensureCsrf();
 
+  const isForm = typeof FormData !== 'undefined' && body instanceof FormData;
   const headers = { Accept: 'application/json' };
-  if (body !== undefined) headers['Content-Type'] = 'application/json';
+  if (body !== undefined && !isForm) headers['Content-Type'] = 'application/json';
   if (csrf && csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
 
   let response;
@@ -64,7 +68,7 @@ async function request(path, { method = 'GET', body, csrf = false, retryOn419 = 
       method,
       headers,
       credentials: 'include',
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body: body === undefined ? undefined : isForm ? body : JSON.stringify(body),
     });
   } catch {
     throw new ApiError('Cannot reach the server. Make sure the API is running.', 0);
@@ -155,4 +159,16 @@ export const api = {
   myEnquiries: () => request('/my/enquiries'),
   adminOverview: () => request('/admin/overview'),
   submitEnquiry,
+
+  /* job tracking: the signed-in client's own jobs */
+  myJobs: () => request('/my/jobs'),
+
+  /* job tracking: owner dashboard */
+  adminClients: () => request('/admin/clients'),
+  adminJobs: () => request('/admin/jobs'),
+  createJob: (payload) => request('/admin/jobs', { method: 'POST', body: payload, csrf: true }),
+  updateJob: (id, payload) => request(`/admin/jobs/${id}`, { method: 'PATCH', body: payload, csrf: true }),
+  deleteJob: (id) => request(`/admin/jobs/${id}`, { method: 'DELETE', csrf: true }),
+  uploadJobPhoto: (id, formData) => request(`/admin/jobs/${id}/photos`, { method: 'POST', body: formData, csrf: true }),
+  deleteJobPhoto: (photoId) => request(`/admin/job-photos/${photoId}`, { method: 'DELETE', csrf: true }),
 };

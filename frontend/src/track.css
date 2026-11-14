@@ -1,0 +1,176 @@
+/* ==========================================================================
+   Track my job (/track) and the shared step look
+   ========================================================================== */
+.tk-wrap { display: flex; flex-direction: column; gap: 28px; max-width: 880px; }
+.tk-loading { color: #6b7280; }
+
+/* ---------- logged-out prompt ---------- */
+.tk-gate {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 48px);
+  text-align: center;
+  background: #fff;
+  border: 1px solid rgba(11, 18, 32, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 30px 60px -36px rgba(11, 18, 32, 0.4);
+}
+.tk-gate-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #2563eb;
+  margin-bottom: 18px;
+}
+.tk-gate h2 { margin: 0 0 10px; font-size: clamp(26px, 3vw, 34px); line-height: 1.1; }
+.tk-gate p { margin: 0 auto; max-width: 42ch; color: #5b6475; line-height: 1.55; }
+.tk-gate-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 26px 0 18px; }
+.tk-gate-small { font-size: 14px; }
+.tk-gate-small a { color: #2563eb; font-weight: 500; }
+
+/* ---------- empty state ---------- */
+.tk-empty {
+  padding: 36px;
+  text-align: center;
+  background: #fff;
+  border: 1.5px dashed #c9cdd3;
+  border-radius: 22px;
+}
+.tk-empty h2 { margin: 0 0 8px; font-size: 26px; }
+.tk-empty p { margin: 0 auto 22px; max-width: 46ch; color: #5b6475; }
+
+/* ---------- job card ---------- */
+.tk-job {
+  background: #fff;
+  border: 1px solid rgba(11, 18, 32, 0.08);
+  border-radius: 24px;
+  padding: clamp(20px, 3.5vw, 36px);
+  box-shadow: 0 30px 60px -40px rgba(11, 18, 32, 0.45);
+}
+.tk-job-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.tk-job-title { margin: 0; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.15; }
+.tk-job-meta { margin: 6px 0 0; color: #6b7280; font-size: 15px; }
+.tk-status {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d4ed8;
+  background: #dbeafe;
+}
+.tk-status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.tk-status.is-done { color: #15803d; background: #dcfce7; }
+
+.tk-progress { display: flex; align-items: center; gap: 14px; margin: 22px 0 28px; }
+.tk-progress-bar { flex: 1; height: 8px; border-radius: 8px; background: #eef0f3; overflow: hidden; }
+.tk-progress-bar i { display: block; height: 100%; border-radius: 8px; background: #2563eb; transition: width 0.6s cubic-bezier(0.22, 0.8, 0.3, 1); }
+.tk-progress-count { font-size: 14px; color: #6b7280; font-variant-numeric: tabular-nums; }
+.tk-progress-count b { color: #0b1220; }
+
+/* ---------- steps ---------- */
+.tk-steps { list-style: none; margin: 0; padding: 0; }
+.tk-step { position: relative; display: grid; grid-template-columns: 38px 1fr; gap: 18px; padding-bottom: 28px; }
+.tk-step:last-child { padding-bottom: 0; }
+.tk-step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 40px;
+  bottom: 2px;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, #d6d9de 0 6px, transparent 6px 12px);
+}
+.tk-step.is-done:not(:last-child)::before { background: #2563eb; }
+
+.tk-dot {
+  position: relative;
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border: 2px solid #d6d9de;
+  color: #9ca3af;
+  font-size: 14px;
+}
+.tk-dot b { font-weight: 600; }
+.is-done .tk-dot { background: #2563eb; border-color: #2563eb; color: #fff; }
+.is-now .tk-dot { border-color: #2563eb; color: #2563eb; box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.14); }
+
+.tk-step-body { padding-top: 6px; min-width: 0; }
+.tk-step-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tk-step-top h3 { margin: 0; font-size: 18px; font-weight: 600; color: #0b1220; }
+.is-next .tk-step-top h3 { color: #9ca3af; }
+.tk-tag { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+.tk-tag-done { color: #1d4ed8; background: #dbeafe; }
+.tk-tag-now { color: #fff; background: #2563eb; }
+.tk-tag-next { color: #6b7280; background: #eef0f3; }
+.tk-date { font-size: 13px; color: #6b7280; margin-left: auto; font-variant-numeric: tabular-nums; }
+
+.tk-note { margin: 8px 0 0; color: #374151; font-size: 15px; line-height: 1.55; white-space: pre-line; }
+
+.tk-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; margin-top: 12px; }
+.tk-photo {
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: #eef0f3;
+  cursor: zoom-in;
+}
+.tk-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.tk-photo:hover img { transform: scale(1.05); }
+.tk-photo:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+
+/* ---------- photo viewer ---------- */
+.tk-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(6, 10, 20, 0.86);
+  animation: tkFade 0.2s ease both;
+}
+.tk-lightbox figure { position: relative; margin: 0; max-width: min(1100px, 100%); }
+.tk-lightbox img { display: block; max-width: 100%; max-height: 82vh; border-radius: 14px; }
+.tk-lightbox figcaption { margin-top: 10px; color: #e5e7eb; text-align: center; font-size: 15px; }
+.tk-lightbox-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 0;
+  background: #fff;
+  color: #0b1220;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+@keyframes tkFade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 560px) {
+  .tk-job-head { flex-direction: column; }
+  .tk-step { grid-template-columns: 32px 1fr; gap: 14px; }
+  .tk-dot { width: 32px; height: 32px; font-size: 13px; }
+  .tk-step:not(:last-child)::before { left: 15px; top: 34px; }
+  .tk-date { margin-left: 0; width: 100%; }
+  .tk-lightbox-close { top: 8px; right: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tk-progress-bar i, .tk-photo img { transition: none; }
+  .tk-lightbox { animation: none; }
+}

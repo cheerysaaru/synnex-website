@@ -6,6 +6,7 @@ import { useSeo } from '../lib/seo.js';
 import { useAuth } from '../lib/auth.jsx';
 import { api } from '../lib/api.js';
 import { formatDate } from '../lib/format.js';
+import AdminJobs from '../components/AdminJobs.jsx';
 
 const formatStamp = (value) => {
   if (!value) return '—';
@@ -124,7 +125,18 @@ export function AdminPage() {
         </div>
       </section>
 
-      <section className="sec alt">
+      <section className="sec alt" id="jobs">
+        <div className="w">
+          <SectionHeading
+            eyebrow="Client jobs"
+            title="Track my job."
+            intro="Jobs you add here show on the client's Track my job page. Tick steps as work is done, add a note and site photos."
+          />
+          <AdminJobs />
+        </div>
+      </section>
+
+      <section className="sec">
         <div className="w">
           <SectionHeading eyebrow="Accounts" title="Who has signed in." intro="Newest activity first. Passwords are never shown." />
           <div className="admin-table-wrap">
@@ -158,7 +170,7 @@ export function AdminPage() {
         </div>
       </section>
 
-      <section className="sec">
+      <section className="sec alt">
         <div className="w">
           <SectionHeading eyebrow="Enquiries" title="Contact messages." intro="Everything sent through the website contact form." />
           <div className="admin-enquiries">

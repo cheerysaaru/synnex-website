@@ -4,6 +4,7 @@ import { Link, useRouter } from '../lib/router.jsx';
 import { useSeo } from '../lib/seo.js';
 import { useAuth } from '../lib/auth.jsx';
 import LoginForm from '../components/LoginForm.jsx';
+import { takeReturn } from '../lib/afterLogin.js';
 
 export function LoginPage() {
   const { user, loading } = useAuth();
@@ -17,7 +18,7 @@ export function LoginPage() {
 
   /* Already signed in? Send the visitor straight home (never back to /login). */
   useEffect(() => {
-    if (!loading && user) navigate('/', { replace: true });
+    if (!loading && user) navigate(takeReturn('/'), { replace: true });
   }, [loading, user, navigate]);
 
   return (
@@ -59,7 +60,7 @@ export function LoginPage() {
 
         <LoginForm
           initialMode={path === '/register' ? 'signup' : 'login'}
-          onSuccess={() => navigate('/', { replace: true })}
+          onSuccess={() => navigate(takeReturn('/'), { replace: true })}
         />
       </div>
     </div>

@@ -1,0 +1,32 @@
+# Temporary: builds test branches so changes can be checked before going live.
+# Nothing is deployed from here.
+name: Test build (no deploy)
+
+on:
+  push:
+    branches: ['test-*']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm run build
+        env:
+          VITE_BASE: /
+          VITE_API_URL: /api
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-dist
+          path: frontend/dist
+          retention-days: 2
