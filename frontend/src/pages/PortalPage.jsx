@@ -76,6 +76,7 @@ export function PortalPage() {
   return (
     <>
       <PageHero eyebrow="Portal" title={`Welcome back, ${user.fullName || user.name}.`} intro={`@${user.username}`}>
+        <Link className="btn" to="/track">Track my job</Link>
         {user.is_admin ? <Link className="btn ghost" to="/admin">Owner dashboard</Link> : null}
         <button className="btn ghost" type="button" onClick={onLogout}>Log out</button>
       </PageHero>
