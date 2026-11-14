@@ -1,6 +1,7 @@
 import { Link } from '../lib/router.jsx';
 import { NAV_MENUS } from '../data/navMenus.js';
 import { company } from '../data/site-data.js';
+import { openCookieSettings } from '../lib/cookies.js';
 import '../footer.css';
 
 /* Full site footer: call-to-action strip, brand, link columns built from the
@@ -65,6 +66,8 @@ export default function SiteFooter({ t, en = {} }) {
           <span className="ft-bottom-links">
             <Link to="/projects">{tr('nav.projects', 'Projects')}</Link>
             <Link to="/faq">FAQ</Link>
+            <Link to="/cookies">Cookie policy</Link>
+            <button type="button" className="ft-cookie-btn" onClick={openCookieSettings}>Cookie settings</button>
             <a href="#top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
               {tr('footer.top', 'Back to top')} ↑
             </a>
