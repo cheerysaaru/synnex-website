@@ -1,6 +1,6 @@
 /* ==========================================================================
    One theme for every page — matches the home page.
-   Warm off-white paper, near-black ink, Space Grotesk headlines, white
+   Warm off-white paper, near-black ink, Mona Sans headlines, white
    rounded cards, soft grey panels, black pill buttons with amber accents.
    Loaded last so it can restyle the inner-page components in pages.css.
    ========================================================================== */
@@ -42,7 +42,7 @@ body .site.is-home:not(.is-front) nav.nv {
 
 /* ---------- headings, same voice as the home page */
 .site :is(.page-title, .sec-title, .cta-band-title, .auth-title, .callout h2, .survey-box h2, .notice h2, .info-callout h2) {
-  font-family: 'Space Grotesk', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  font-family: 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   font-weight: 500;
   letter-spacing: -0.035em;
   text-wrap: balance;
@@ -76,7 +76,7 @@ body .site.is-home:not(.is-front) nav.nv {
   border-radius: 999px;
   background: #ffffff;
   color: var(--ink);
-  font: 500 13px/1 'Inter', sans-serif;
+  font: 500 13px/1 'Mona Sans', sans-serif;
   letter-spacing: 0;
   text-transform: none;
   margin-bottom: 24px;
@@ -174,7 +174,7 @@ body .site.is-home:not(.is-front) nav.nv {
 
 .site .stat-value {
   color: var(--ink);
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Mona Sans', sans-serif;
   font-weight: 500;
   letter-spacing: -0.03em;
 }
@@ -204,7 +204,7 @@ body .site.is-home:not(.is-front) nav.nv {
   border-radius: 999px;
   background: #e8efff;
   border: 1px solid var(--amber);
-  font: 600 12px/1 'Inter', sans-serif;
+  font: 600 12px/1 'Mona Sans', sans-serif;
 }
 
 /* badges, chips, check marks */
@@ -276,7 +276,7 @@ body .site.is-home:not(.is-front) nav.nv {
   background: var(--ink);
   color: #ffffff;
   border: 1px solid var(--ink);
-  font: 500 15px/1 'Inter', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  font: 500 15px/1 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   --liquid: #2563eb;
   --liquid-text: #ffffff;
 }
@@ -404,13 +404,13 @@ body .site.is-home:not(.is-front) nav.nv {
 
 .login-title {
   color: #111110;
-  font-family: 'Space Grotesk', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  font-family: 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   font-weight: 500;
   letter-spacing: -0.035em;
 }
 
 .login-line {
-  font-family: 'Space Grotesk', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  font-family: 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   font-weight: 500;
   letter-spacing: -0.03em;
 }

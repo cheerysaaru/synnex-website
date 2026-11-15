@@ -95,7 +95,7 @@
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 30px 70px rgba(17, 17, 16, 0.22), 0 0 0 1px rgba(17, 17, 16, 0.06);
-  font: 400 15px/1.5 'Inter', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  font: 400 15px/1.5 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   transform-origin: bottom right;
   opacity: 0;
   visibility: hidden;
@@ -137,7 +137,7 @@
 }
 
 .ca-title b {
-  font: 600 16px/1.2 'Space Grotesk', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  font: 600 16px/1.2 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
 }
 
 .ca-title span {
@@ -283,7 +283,7 @@
   color: #1d4ed8;
   border-radius: 999px;
   padding: 7px 12px;
-  font: 500 13px/1.2 'Inter', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  font: 500 13px/1.2 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
@@ -321,7 +321,7 @@
   border-radius: 999px;
   background: #ffffff;
   color: #111110;
-  font: 400 15px 'Inter', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+  font: 400 15px 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   outline: none;
 }
 

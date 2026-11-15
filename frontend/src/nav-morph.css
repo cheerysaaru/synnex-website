@@ -210,7 +210,7 @@
   }
 
   .nv-mx-co-text b {
-    font: 600 15px/1.25 'Inter', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+    font: 600 15px/1.25 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   }
 
   .nv-mx-co-text span {
@@ -351,7 +351,7 @@
   }
 
   .nv-mx-card-text b {
-    font: 600 15px/1.2 'Space Grotesk', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+    font: 600 15px/1.2 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -381,7 +381,7 @@
     border-radius: 999px;
     background: #ffffff;
     color: #111110;
-    font: 500 12.5px/1 'Inter', sans-serif;
+    font: 500 12.5px/1 'Mona Sans', sans-serif;
     font-style: normal;
     opacity: 0;
     transform: translateY(6px);
@@ -407,7 +407,7 @@
   }
 
   .nv-mx-res-head span {
-    font: 600 11px/1 'Inter', sans-serif;
+    font: 600 11px/1 'Mona Sans', sans-serif;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #686863;
@@ -466,7 +466,7 @@
   }
 
   .nv-mx-res-text b {
-    font: 600 14px/1.3 'Inter', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
+    font: 600 14px/1.3 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   }
 
   .nv-mx-res-text span {

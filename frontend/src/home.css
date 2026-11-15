@@ -14,8 +14,8 @@
   --hm-line: rgba(17, 17, 16, 0.12);
   --hm-spark: #2563eb;
   --hm-ok: #2f7d4f;
-  --hm-serif: 'Space Grotesk', 'Noto Sans Tamil', 'Noto Sans Sinhala', 'Helvetica Neue', Arial, sans-serif;
-  --hm-sans: 'Inter', 'Noto Sans Tamil', 'Noto Sans Sinhala', 'Helvetica Neue', Arial, sans-serif;
+  --hm-serif: 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', 'Helvetica Neue', Arial, sans-serif;
+  --hm-sans: 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', 'Helvetica Neue', Arial, sans-serif;
 
   background: var(--hm-paper);
   color: var(--hm-ink);
