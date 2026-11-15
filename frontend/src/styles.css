@@ -74,7 +74,7 @@ h3 {
   font-family: var(--display);
   margin: 0;
   line-height: 1.02;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.009em;
 }
 
 a {
@@ -221,7 +221,7 @@ nav.nv.om {
   text-decoration: none;
   color: inherit;
   font: 700 19px/1 'Mona Sans', sans-serif;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.007em;
 }
 
 .nv-logo i {
@@ -521,7 +521,7 @@ nav.nv.om {
   font-weight: 400;
   font-size: 32px;
   line-height: 1.1;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   color: #ffffff;
   margin: 0 0 14px;
 }
@@ -607,7 +607,7 @@ nav.nv.om {
 .nv-mega-item b {
   display: block;
   font: 500 17px/1.3 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   color: #ffffff;
 }
 
@@ -1138,7 +1138,7 @@ nav.nv.mopen .nv-burger span:nth-child(3) {
   font-size: clamp(38px, 5.4vw, 78px);
   max-width: 16ch;
   font-weight: 600;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.010em;
   line-height: 1.04;
 }
 
@@ -1243,7 +1243,7 @@ section {
 
 .sig {
   font: 600 26px var(--display);
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   margin-top: 28px;
 }
 
@@ -1472,7 +1472,7 @@ section {
 .pi h3 {
   font-size: 23px;
   margin: 6px 0 4px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.007em;
 }
 
 .pi p {
@@ -1603,7 +1603,7 @@ section {
   font-size: 60px;
   color: var(--accent);
   margin: 0 10px;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.010em;
   vertical-align: -9px;
 }
 
@@ -1718,7 +1718,7 @@ section {
 .quote blockquote {
   margin: 0;
   font: 600 clamp(28px, 4.4vw, 56px)/1.1 var(--display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.007em;
   max-width: 22ch;
   min-height: 4.8em;
 }

@@ -228,7 +228,7 @@ a.ui-card:focus-visible {
 .stat-value {
   font: 600 clamp(28px, 3.6vw, 40px)/1 var(--display);
   color: var(--accent);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.010em;
 }
 
 .stat-label {

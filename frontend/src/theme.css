@@ -44,13 +44,13 @@ body .site.is-home:not(.is-front) nav.nv {
 .site :is(.page-title, .sec-title, .cta-band-title, .auth-title, .callout h2, .survey-box h2, .notice h2, .info-callout h2) {
   font-family: 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   font-weight: 500;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.012em;
   text-wrap: balance;
 }
 
 .site :is(.ui-card h3, .timeline-body h3, .process-step h3, .team-body h3, .cert-head h3) {
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.007em;
 }
 
 /* ---------- page hero: light, centred, like the home section headings */
@@ -176,7 +176,7 @@ body .site.is-home:not(.is-front) nav.nv {
   color: var(--ink);
   font-family: 'Mona Sans', sans-serif;
   font-weight: 500;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.010em;
 }
 
 /* timeline + process accents in amber */
@@ -406,13 +406,13 @@ body .site.is-home:not(.is-front) nav.nv {
   color: #111110;
   font-family: 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   font-weight: 500;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.012em;
 }
 
 .login-line {
   font-family: 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
   font-weight: 500;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.010em;
 }
 
 .login-intro,

@@ -46,7 +46,7 @@ body footer.ft {
   max-width: 16ch;
   color: #ffffff;
   font: 500 clamp(34px, 4.4vw, 60px)/1.02 'Mona Sans', 'Noto Sans Tamil', 'Noto Sans Sinhala', sans-serif;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.012em;
 }
 
 .ft-cta-actions {
@@ -97,7 +97,7 @@ body footer.ft {
   display: inline-block;
   color: #ffffff !important;
   font: 700 26px/1 'Mona Sans', sans-serif;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.010em;
   margin-bottom: 16px;
 }
 
@@ -186,7 +186,7 @@ body footer.ft {
 
 .ft-wordmark {
   font: 700 clamp(80px, 19vw, 300px)/0.8 'Mona Sans', sans-serif;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.021em;
   text-align: center;
   white-space: nowrap;
   color: transparent;

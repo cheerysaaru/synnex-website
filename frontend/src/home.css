@@ -119,7 +119,7 @@ body .site.is-home .nv-mega-p {
 
 .is-home .nv-logo {
   font: 700 21px/1 var(--hm-serif);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.007em;
 }
 
 .is-home .nv-tr,
@@ -193,7 +193,7 @@ body .site.is-home .nv-mega-p {
 .hm h2 {
   font-family: var(--hm-serif);
   font-weight: 500;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.012em;
   color: inherit;
   max-width: none;
   text-wrap: balance;
@@ -209,7 +209,7 @@ body .site.is-home .nv-mega-p {
   font-weight: 600;
   font-size: 18px;
   line-height: 1.3;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   color: inherit;
 }
 
@@ -578,7 +578,7 @@ body .site.is-home .nv-mega-p {
 
 .hm-svc-detail h3 {
   font: 500 34px/1.1 var(--hm-serif);
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .hm-svc-detail p {
@@ -635,7 +635,7 @@ body .site.is-home .nv-mega-p {
 .hm-app-brand {
   font-weight: 600;
   font-size: 17px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.007em;
   padding: 8px 12px 18px;
 }
 
@@ -927,7 +927,7 @@ body .site.is-home .nv-mega-p {
 
 .hm-quote blockquote p {
   font: 500 clamp(32px, 3.8vw, 48px)/1.15 var(--hm-serif);
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   text-wrap: balance;
 }
 
@@ -1323,7 +1323,7 @@ body .site.is-home .nv-mega-p {
   margin: 4px 0 0;
   font-size: clamp(40px, 5vw, 60px);
   line-height: 1;
-  letter-spacing: -.02em;
+  letter-spacing: -0.007em;
   font-weight: 600;
   color: var(--hm-ink, #111110);
   outline: none;

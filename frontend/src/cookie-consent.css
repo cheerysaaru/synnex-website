@@ -16,7 +16,7 @@
 @keyframes sckIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 .sck-head { display: flex; align-items: center; gap: 12px; }
 .sck-icon { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: #eff6ff; color: #2563eb; }
-html body .site .sck-title, .sck-title { margin: 0; max-width: none; font-size: 19px; line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; }
+html body .site .sck-title, .sck-title { margin: 0; max-width: none; font-size: 19px; line-height: 1.2; font-weight: 600; letter-spacing: 0; }
 .sck-text { margin: 12px 0 16px; font-size: 14.5px; line-height: 1.55; color: #4b5563; }
 .sck-actions { display: flex; gap: 10px; }
 .sck-btn {
