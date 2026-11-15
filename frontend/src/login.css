@@ -68,10 +68,10 @@
 }
 
 .login-brand {
-  font-family: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Mona Sans', 'Helvetica Neue', Arial, sans-serif;
   font-size: clamp(21px, 2vw, 28px);
   line-height: 1.05;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   color: #ffffff;
 }
 
@@ -95,10 +95,10 @@
 
 .login-line {
   margin: 0 0 14px;
-  font-family: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Mona Sans', 'Helvetica Neue', Arial, sans-serif;
   font-size: clamp(30px, 3.2vw, 48px);
   line-height: 1.05;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.007em;
   color: #ffffff;
 }
 
@@ -142,10 +142,10 @@
 
 .login-title {
   margin: 0 0 10px;
-  font-family: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Mona Sans', 'Helvetica Neue', Arial, sans-serif;
   font-size: 36px;
   line-height: 1.05;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.007em;
   color: #0b1220;
 }
 

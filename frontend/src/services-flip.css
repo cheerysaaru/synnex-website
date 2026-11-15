@@ -141,7 +141,7 @@ html body .site .hm section.fl-track {
   max-width: 12ch;
   font-size: clamp(38px, 5.6vw, 78px);
   line-height: 1.02;
-  letter-spacing: -.02em;
+  letter-spacing: -0.007em;
   font-weight: 700;
   color: #fff;
 }
