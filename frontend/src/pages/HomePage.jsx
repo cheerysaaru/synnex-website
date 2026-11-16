@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { api } from '../lib/api.js';
 import { Link } from '../lib/router.jsx';
 import ServicesStack from '../components/ServicesStack.jsx';
+import MainWork from '../components/MainWork.jsx';
+import '../main-work.css';
 import JobTimeline from '../components/JobTimeline.jsx';
 import LetterHero from '../components/LetterHero.jsx';
 import EnquiryForm from '../components/EnquiryForm.jsx';
@@ -104,6 +106,9 @@ export default function HomePage({ t, en, phone, heroVideo = `${import.meta.env.
           <div><b>{tr('facts.4.n', '1')}</b><span>{tr('facts.4.s', 'engineer, start to finish')}</span></div>
         </div>
       </section>
+
+      {/* ------------------------------------------------ main work: lightning protection */}
+      <MainWork />
 
       {/* ------------------------------------------------ services */}
       <ServicesStack />
