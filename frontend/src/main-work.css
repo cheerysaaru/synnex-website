@@ -27,8 +27,8 @@ html body .site .mw h2,
   letter-spacing: -0.012em;
   color: #111110;
 }
-.mw-lead { margin: 0 0 14px; font-size: 18px; line-height: 1.6; color: #55554f; max-width: 48ch; }
-.mw-more { margin: 0 0 32px; font-size: 16px; line-height: 1.65; color: #686863; max-width: 50ch; }
+html body .site .mw .mw-lead, .mw-lead { margin: 0 0 14px; font-size: 18px; line-height: 1.6; color: #55554f; max-width: 48ch; }
+html body .site .mw .mw-more, .mw-more { margin: 0 0 32px; font-size: 16px; line-height: 1.65; color: #686863; max-width: 50ch; }
 .mw-cta { display: flex; flex-wrap: wrap; gap: 10px; }
 .mw-btn {
   display: inline-flex;
