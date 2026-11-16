@@ -5,7 +5,7 @@ import { useSeo } from '../lib/seo.js';
 import { solutions, company } from '../data/site-data.js';
 import { NotFoundPage } from './MiscPages.jsx';
 
-const ORDER = ['residential', 'commercial', 'industrial', 'solar', 'testing', 'power-backup'];
+const ORDER = ['lightning-protection', 'residential', 'commercial', 'industrial', 'solar', 'testing', 'power-backup'];
 
 export function SolutionsOverviewPage() {
   const items = ORDER.map((key) => solutions.items[key]).filter(Boolean);

@@ -200,6 +200,31 @@ export const solutions = {
   intro:
     'Electrical work for homes, businesses and industry, planned for the way you actually live and work.',
   items: {
+    'lightning-protection': {
+      slug: 'lightning-protection',
+      title: 'Lightning Protection',
+      eyebrow: 'Solutions',
+      intro: 'Lightning arresters, down conductors, earthing and surge protection, designed and tested to SLS 1472 and IEC 62305.',
+      services: [
+        'Lightning risk assessment',
+        'Conventional copper lightning rods',
+        'ESE lightning arresters',
+        'Down conductors and test joints',
+        'Earth pits and earth resistance testing',
+        'Surge protection devices at the board',
+      ],
+      process: [
+        { title: 'Survey', text: 'We look at the building height, roof, use and what is inside it.' },
+        { title: 'Design', text: 'We choose the arrester type and position so the whole building is covered.' },
+        { title: 'Install', text: 'Arrester, down conductor and earth pit fitted with tidy, protected runs.' },
+        { title: 'Test', text: 'We measure earth resistance and hand over the readings in writing.' },
+      ],
+      faqs: [
+        { q: 'Do I need a copper rod or an ESE arrester?', a: 'It depends on the size and shape of the building. Small houses are often well served by conventional rods; large roofs and tall buildings may suit an ESE arrester. We explain both before you decide.' },
+        { q: 'How often should a lightning protection system be checked?', a: 'A yearly check is a sensible routine, and always after a nearby strike. We inspect the arrester and joints and re-test the earth pit.' },
+        { q: 'Will it protect my TV, computers and appliances?', a: 'The arrester protects the building itself. To protect equipment inside, surge protection devices are added at your distribution board. We usually fit both together.' },
+      ],
+    },
     residential: {
       slug: 'residential',
       title: 'Residential Electrical',

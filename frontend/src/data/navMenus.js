@@ -44,6 +44,7 @@ export const NAV_MENUS = [
     ctaHref: '/solutions',
     colLabelKey: 'sol.label',
     links: [
+      { tKey: 'sol.lp.t', sKey: 'sol.lp.s', href: '/solutions/lightning-protection' },
       { tKey: 'sol.d1.t', sKey: 'sol.d1.s', href: '/solutions/residential' },
       { tKey: 'sol.d2.t', sKey: 'sol.d2.s', href: '/solutions/commercial' },
       { tKey: 'sol.d3.t', sKey: 'sol.d3.s', href: '/solutions/industrial' },
@@ -52,11 +53,11 @@ export const NAV_MENUS = [
       { tKey: 'sol.i6.t', sKey: 'sol.i6.s', href: '/solutions/testing' },
     ],
     feature: {
-      href: '/solutions/solar',
-      tKey: 'sol.f.t',
-      sKey: 'sol.f.s',
-      altKey: 'sol.f.alt',
-      img: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=640&h=400&q=70&fm=webp',
+      href: '/solutions/lightning-protection',
+      tKey: 'sol.lpf.t',
+      sKey: 'sol.lpf.s',
+      altKey: 'sol.lpf.alt',
+      img: 'https://images.unsplash.com/photo-1623392962768-a759c255f59a?auto=format&fit=crop&w=640&h=400&q=70&fm=webp',
     },
   },
   {

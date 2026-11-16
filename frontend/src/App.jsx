@@ -121,6 +121,11 @@ const NAV_T = {
     'co.d4.t': 'News',
     'co.d4.s': 'Latest updates and announcements',
 
+    'sol.lp.t': 'Lightning Protection',
+    'sol.lp.s': 'Lightning arresters, earthing and surge protection',
+    'sol.lpf.t': 'Lightning protection, our main work',
+    'sol.lpf.s': 'Arresters, down conductors and earth pits, tested to SLS 1472.',
+    'sol.lpf.alt': 'Lightning striking near a building at night',
     'sol.d1.t': 'Residential Electrical',
     'sol.d1.s': 'Home wiring, lighting and repairs',
     'sol.d2.t': 'Commercial Electrical',
@@ -291,6 +296,12 @@ const NAV_T = {
 
     'faq.intro': 'எங்க இருந்து தொடங்குவது தெரியவில்லையா? எங்களுக்கு அழையுங்கள், சரியான வழிகாட்டுதலை வழங்குவோம்.',
     'work.kicker': 'தேர்ந்தெடுக்கப்பட்ட வேலை',
+
+    'sol.lp.t': 'மின்னல் பாதுகாப்பு',
+    'sol.lp.s': 'மின்னல் தாங்கிகள், புவியிணைப்பு மற்றும் மின்னழுத்த எழுச்சிப் பாதுகாப்பு',
+    'sol.lpf.t': 'மின்னல் பாதுகாப்பு, எங்கள் முதன்மைப் பணி',
+    'sol.lpf.s': 'மின்னல் தாங்கிகள், கீழிறங்கு கடத்திகள் மற்றும் புவிக்குழிகள், SLS 1472 படி சோதிக்கப்பட்டவை.',
+    'sol.lpf.alt': 'இரவில் ஒரு கட்டடத்தின் அருகே மின்னல் தாக்குதல்',
   },
   si: {
     'nav.company': 'ආයතනය',
@@ -380,6 +391,11 @@ const NAV_T = {
     'co.d4.t': 'නවල',
     'co.d4.s': 'අලුත් නවතරක් සහ අත්දැකීම්',
 
+    'sol.lp.t': 'අකුණු ආරක්ෂණය',
+    'sol.lp.s': 'අකුණු සන්නායක, භූගත කිරීම සහ සර්ජ් ආරක්ෂණය',
+    'sol.lpf.t': 'අකුණු ආරක්ෂණය, අපගේ ප්‍රධාන සේවාව',
+    'sol.lpf.s': 'අකුණු සන්නායක, පහළට යන සන්නායක සහ භූගත වළවල්, SLS 1472 අනුව පරීක්ෂා කළ.',
+    'sol.lpf.alt': 'රාත්‍රියේ ගොඩනැගිල්ලක් අසල අකුණු සැර වැදීම',
     'sol.d1.t': 'නිවාස විදුලි සේවා',
     'sol.d1.s': 'නිවෙස් වයරින්, ආලෝකකරණය, අලුත්වැඩියා',
     'sol.d2.t': 'වාණිජ විදුලි සේවා',
