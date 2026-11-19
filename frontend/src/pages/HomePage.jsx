@@ -3,6 +3,8 @@ import { api } from '../lib/api.js';
 import { Link } from '../lib/router.jsx';
 import ServicesStack from '../components/ServicesStack.jsx';
 import MainWork from '../components/MainWork.jsx';
+import ClientsWall from '../components/ClientsWall.jsx';
+import '../clients-wall.css';
 import '../main-work.css';
 import JobTimeline from '../components/JobTimeline.jsx';
 import LetterHero from '../components/LetterHero.jsx';
@@ -112,6 +114,9 @@ export default function HomePage({ t, en, phone, heroVideo = `${import.meta.env.
 
       {/* ------------------------------------------------ services */}
       <ServicesStack />
+
+      {/* ------------------------------------------------ clients */}
+      <ClientsWall />
 
       {/* ------------------------------------------------ portal */}
       <JobTimeline />

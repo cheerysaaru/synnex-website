@@ -1,0 +1,64 @@
+/* ClientsWall: every client in one list, category buttons with counts */
+.cw {
+  margin: 40px 12px;
+  padding: 84px 24px 80px;
+  background: #0b1220;
+  color: #fff;
+  border-radius: 28px;
+}
+.cw-w { max-width: 1120px; margin: 0 auto; }
+.cw-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 34px; }
+html body .site .cw h2,
+.cw h2 { margin: 0; max-width: 16ch; font-size: clamp(30px, 3.6vw, 48px); line-height: 1.05; letter-spacing: -0.012em; color: #fff; }
+html body .site .cw .cw-top p,
+.cw-top p { margin: 0; max-width: 36ch; color: #9aa6bd; font-size: 16px; line-height: 1.6; }
+
+.cw-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 44px; }
+.cw-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 8px 0 16px;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #c9d3e6;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.cw-tabs button b {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 13px;
+}
+.cw-tabs button:hover { border-color: rgba(255, 255, 255, 0.4); color: #fff; }
+.cw-tabs button[aria-pressed='true'] { background: #2563eb; border-color: #2563eb; color: #fff; }
+.cw-tabs button[aria-pressed='true'] b { background: #fff; color: #2563eb; }
+.cw-tabs button:focus-visible { outline: 3px solid rgba(96, 165, 250, 0.6); outline-offset: 2px; }
+
+html body .site .cw .cw-wall,
+.cw-wall { margin: 0; font-size: clamp(20px, 2.6vw, 34px); line-height: 1.45; font-weight: 600; letter-spacing: -0.01em; color: #fff; max-width: none; }
+.cw-name { color: #fff; transition: color 0.25s; }
+.cw-name.is-dim { color: #33405a; }
+.cw-wall i { font-style: normal; color: #2563eb; margin: 0 0.35em; }
+
+html body .site .cw .cw-live,
+.cw-live { margin: 28px 0 0; font-size: 14px; color: #9aa6bd; }
+.cw-live b { color: #fff; }
+
+@media (max-width: 620px) {
+  .cw { margin: 24px 8px; padding: 60px 18px 56px; border-radius: 22px; }
+  .cw-tabs { gap: 6px; margin-bottom: 32px; }
+  .cw-tabs button { font-size: 13.5px; padding-left: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .cw-name, .cw-tabs button { transition: none; } }
