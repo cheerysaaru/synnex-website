@@ -9,7 +9,7 @@ import CookieConsent from './components/CookieConsent.jsx';
 import './cookie-consent.css';
 import LoginModal from './components/LoginModal.jsx';
 import ChatAssistant from './components/ChatAssistant.jsx';
-import { takeReturn } from './lib/afterLogin.js';
+import { goAfterLogin, leaveLogin } from './lib/afterLogin.js';
 
 const PHONE = '0777588128';
 
@@ -1018,12 +1018,12 @@ function App() {
 
   const closeLogin = useCallback(() => {
     setLoginPopup(null);
-    if (popupRoute) navigate(takeReturn('/'), { replace: true });
+    if (popupRoute) leaveLogin(navigate, '/');
   }, [popupRoute, navigate]);
 
   const loginDone = useCallback(() => {
     setLoginPopup(null);
-    if (popupRoute) navigate(takeReturn('/'), { replace: true });
+    if (popupRoute) goAfterLogin(navigate, '/');
   }, [popupRoute, navigate]);
 
   const [lang, setLang] = useState(() => {
