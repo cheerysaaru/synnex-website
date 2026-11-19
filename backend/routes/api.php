@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminJobController;
 use App\Http\Controllers\ClientJobController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactSubmissionController;
+use App\Http\Controllers\QuoteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', function () {
@@ -51,5 +52,32 @@ Route::middleware(['auth:web', 'admin'])->group(function () {
         Route::delete('/admin/jobs/{job}', [AdminJobController::class, 'destroy']);
         Route::post('/admin/jobs/{job}/photos', [AdminJobController::class, 'storePhoto']);
         Route::delete('/admin/job-photos/{photo}', [AdminJobController::class, 'destroyPhoto']);
+    });
+
+    // Quotations, invoices and letters (/admin/quotation). Owner only; changes need CSRF.
+    Route::prefix('quotes')->group(function () {
+        Route::get('/health', [QuoteController::class, 'health']);
+        Route::get('/settings', [QuoteController::class, 'getSettings']);
+        Route::get('/stats', [QuoteController::class, 'stats']);
+        Route::get('/documents', [QuoteController::class, 'listDocuments']);
+        Route::get('/documents/{id}', [QuoteController::class, 'showDoc']);
+        Route::get('/backup', [QuoteController::class, 'backup']);
+        Route::get('/{col}', [QuoteController::class, 'listCollection'])->whereIn('col', ['customers', 'catalog']);
+        Route::get('/{col}/{id}', [QuoteController::class, 'showCollection'])->whereIn('col', ['customers', 'catalog']);
+
+        Route::middleware(['csrf', 'throttle:240,1'])->group(function () {
+            Route::put('/settings', [QuoteController::class, 'putSettings']);
+            Route::post('/documents', [QuoteController::class, 'createDoc']);
+            Route::put('/documents/{id}', [QuoteController::class, 'updateDoc']);
+            Route::patch('/documents/{id}', [QuoteController::class, 'patchDoc']);
+            Route::delete('/documents/{id}', [QuoteController::class, 'deleteDoc']);
+            Route::post('/documents/{id}/duplicate', [QuoteController::class, 'duplicateDoc']);
+            Route::post('/documents/{id}/convert', [QuoteController::class, 'convertDoc']);
+            Route::post('/restore', [QuoteController::class, 'restore']);
+            Route::post('/import', [QuoteController::class, 'import']);
+            Route::post('/{col}', [QuoteController::class, 'createCollection'])->whereIn('col', ['customers', 'catalog']);
+            Route::put('/{col}/{id}', [QuoteController::class, 'updateCollection'])->whereIn('col', ['customers', 'catalog']);
+            Route::delete('/{col}/{id}', [QuoteController::class, 'deleteCollection'])->whereIn('col', ['customers', 'catalog']);
+        });
     });
 });
