@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin
+Disallow: /quotation-app/
+Disallow: /portal
+Disallow: /track
+Disallow: /login
+Disallow: /register
