@@ -2,9 +2,11 @@
    where embedded PDF viewers are often missing. */
 import { useEffect, useRef, useState } from "react";
 import * as pdfjs from "pdfjs-dist";
-import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
+// Bundled by Vite as a normal .js worker: some servers (LiteSpeed) send .mjs
+// files with the wrong type, which stops the browser from loading them.
+import PdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs?worker";
 
-pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
+pdfjs.GlobalWorkerOptions.workerPort = new PdfWorker();
 
 export function PdfPages({ blob, onError }: { blob: Blob | null; onError?: (m: string) => void }) {
   const host = useRef<HTMLDivElement>(null);

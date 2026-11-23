@@ -9,6 +9,8 @@ export default defineConfig({
     // During "npm run dev" the API runs on 3001; the app talks to it through /api.
     proxy: { "/api": "http://localhost:3001" },
   },
+  // pdf.js worker is an ES module; keep it one when bundling.
+  worker: { format: "es" },
   build: {
     chunkSizeWarningLimit: 2000,
   },
