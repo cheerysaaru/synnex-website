@@ -48,6 +48,7 @@ jobs:
         working-directory: frontend
         run: |
           cat > dist/.htaccess <<'HTACCESS'
+          AddType text/javascript .mjs
           RewriteEngine On
           RewriteBase /
           # Admin quotation tool: its own app in /quotation-app, shown at /admin/quotation/
