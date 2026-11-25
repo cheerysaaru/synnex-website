@@ -109,7 +109,7 @@ export default [
   ["Apprentice Electrician", "பயிற்சி மின்தொழிலாளி", "ආධුනික විදුලි කාර්මික"],
   ["Learn on real projects with mentoring from experienced engineers.", "அனுபவமிக்க பொறியாளர்களின் வழிகாட்டலுடன் உண்மையான திட்டங்களில் கற்றுக்கொள்ளுங்கள்.", "පළපුරුදු ඉංජිනේරුවන්ගේ මඟපෙන්වීම යටතේ සැබෑ ව්‍යාපෘතිවලින් ඉගෙන ගන්න."],
   ["How to apply", "விண்ணப்பிப்பது எப்படி", "අයදුම් කරන්නේ කෙසේද"],
-  ["To apply, send your name, experience and contact number to vkarull@gmail.com or call us. We reply to every application.", "விண்ணப்பிக்க, உங்கள் பெயர், அனுபவம் மற்றும் தொடர்பு எண்ணை vkarull@gmail.com க்கு அனுப்புங்கள் அல்லது எங்களை அழையுங்கள். ஒவ்வொரு விண்ணப்பத்திற்கும் பதிலளிக்கிறோம்.", "අයදුම් කිරීමට, ඔබේ නම, පළපුරුද්ද සහ දුරකථන අංකය vkarull@gmail.com වෙත එවන්න හෝ අපට අමතන්න. අපි සෑම අයදුම්පතකටම පිළිතුරු දෙමු."],
+  ["To apply, send your name, experience and contact number to hello@synnex-technology.com or call us. We reply to every application.", "விண்ணப்பிக்க, உங்கள் பெயர், அனுபவம் மற்றும் தொடர்பு எண்ணை hello@synnex-technology.com க்கு அனுப்புங்கள் அல்லது எங்களை அழையுங்கள். ஒவ்வொரு விண்ணப்பத்திற்கும் பதிலளிக்கிறோம்.", "අයදුම් කිරීමට, ඔබේ නම, පළපුරුද්ද සහ දුරකථන අංකය hello@synnex-technology.com වෙත එවන්න හෝ අපට අමතන්න. අපි සෑම අයදුම්පතකටම පිළිතුරු දෙමු."],
   ["Email your CV", "உங்கள் CV ஐ மின்னஞ்சல் செய்யுங்கள்", "ඔබේ CV එක ඊමේල් කරන්න"],
   ["Questions about a role? Talk to us before you apply.", "பணியைப் பற்றிக் கேள்விகளா? விண்ணப்பிக்கும் முன் எங்களுடன் பேசுங்கள்.", "තනතුරක් ගැන ප්‍රශ්න තිබේද? අයදුම් කිරීමට පෙර අප සමඟ කතා කරන්න."],
   ["Explore our solutions.", "எங்கள் தீர்வுகளைப் பாருங்கள்.", "අපගේ විසඳුම් බලන්න."],
