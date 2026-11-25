@@ -44,22 +44,12 @@ jobs:
           VITE_API_URL: https://api.synnex-technology.com/api
       - name: Add the quotation tool to the site (served at /admin/quotation/)
         run: cp -r quotation/dist frontend/dist/quotation-app
-      - name: Page links work when opened directly (.htaccess for OpenLiteSpeed)
+      - name: Ready-made HTML for every public page, sitemap.xml and .htaccess
         working-directory: frontend
         run: |
-          cat > dist/.htaccess <<'HTACCESS'
-          AddType text/javascript .mjs
-          RewriteEngine On
-          RewriteBase /
-          # Admin quotation tool: its own app in /quotation-app, shown at /admin/quotation/
-          RewriteRule ^admin/quotation$ /admin/quotation/ [R=301,L]
-          RewriteRule ^admin/quotation/$ /quotation-app/index.html [L]
-          RewriteRule ^admin/quotation/(.+)$ /quotation-app/$1 [L]
-          RewriteRule ^index\.html$ - [L]
-          RewriteCond %{REQUEST_FILENAME} !-f
-          RewriteCond %{REQUEST_FILENAME} !-d
-          RewriteRule . /index.html [L]
-          HTACCESS
+          pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+          python scripts/postbuild_seo.py dist
       - name: Publish to the site-build branch
         uses: peaceiris/actions-gh-pages@v4
         with:

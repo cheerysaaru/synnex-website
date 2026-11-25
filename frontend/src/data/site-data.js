@@ -16,15 +16,15 @@ export const company = {
   phone: '077 758 8128',
   phoneHref: '+94777588128',
   whatsapp: '94777588128',
-  email: 'vkarull@gmail.com',
-  emailHref: 'mailto:vkarull@gmail.com',
+  email: 'hello@synnex-technology.com',
+  emailHref: 'mailto:hello@synnex-technology.com',
   addressLocality: 'Colombo',
   addressCountry: 'LK',
   addressCountryName: 'Sri Lanka',
   hours: 'Monday–Friday, 10:00 AM–6:00 PM',
   slogan: 'Safe, reliable electrical solutions for Sri Lanka',
   description:
-    'Safe, reliable electrical engineering, solar PV, wiring, installation and maintenance services across Colombo and Sri Lanka.',
+    'Lightning protection, electrical engineering, solar PV, wiring, installation and maintenance services across Colombo and Sri Lanka.',
   areaServed: 'Sri Lanka',
 };
 
@@ -159,7 +159,7 @@ export const careers = {
     },
   ],
   applyNote:
-    'To apply, send your name, experience and contact number to vkarull@gmail.com or call us. We reply to every application.',
+    'To apply, send your name, experience and contact number to hello@synnex-technology.com or call us. We reply to every application.',
 };
 
 export const news = {

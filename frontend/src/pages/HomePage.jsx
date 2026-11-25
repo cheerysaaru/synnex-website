@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { api } from '../lib/api.js';
 import { Link } from '../lib/router.jsx';
+import { useSeo, localBusinessJsonLd } from '../lib/seo.js';
+import { company } from '../data/site-data.js';
+
+const HOME_JSONLD = localBusinessJsonLd(company);
 import ServicesStack from '../components/ServicesStack.jsx';
 import MainWork from '../components/MainWork.jsx';
 import ClientsWall from '../components/ClientsWall.jsx';
@@ -86,10 +90,12 @@ const reducedMotion = () =>
 export default function HomePage({ t, en, phone, heroVideo }) {
   const tr = (key, fallback) => t[key] ?? en[key] ?? fallback;
 
-  /* the home page owns its tab title (other pages set theirs with useSeo) */
-  useEffect(() => {
-    document.title = 'Synnex Technology | Electrical Engineering, Colombo';
-  }, []);
+  useSeo({
+    title: 'Synnex Technology | Electrical Engineering, Colombo',
+    description: 'Lightning protection, wiring, solar PV and power systems for homes and businesses across Sri Lanka. Lightning arresters and earthing to SLS 1472, by Synnex Technology, Colombo.',
+    path: '/',
+    jsonLd: HOME_JSONLD,
+  });
 
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [openFaq, setOpenFaq] = useState(0);
