@@ -62,3 +62,6 @@ html body .site .cw .cw-live,
   .cw-tabs button { font-size: 13.5px; padding-left: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { .cw-name, .cw-tabs button { transition: none; } }
+
+.cw-areas { display: inline-flex; align-items: center; min-height: 44px; margin-top: 18px; padding: 0 20px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.24); color: #fff; font-weight: 600; font-size: 15px; text-decoration: none; }
+.cw-areas:hover { border-color: #fff; color: #fff; }

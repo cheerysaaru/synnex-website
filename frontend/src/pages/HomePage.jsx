@@ -91,8 +91,8 @@ export default function HomePage({ t, en, phone, heroVideo }) {
   const tr = (key, fallback) => t[key] ?? en[key] ?? fallback;
 
   useSeo({
-    title: 'Synnex Technology | Electrical Engineering, Colombo',
-    description: 'Lightning protection, wiring, solar PV and power systems for homes and businesses across Sri Lanka. Lightning arresters and earthing to SLS 1472, by Synnex Technology, Colombo.',
+    title: 'Lightning Protection & Electrical Engineers in Sri Lanka | Synnex Technology',
+    description: 'Lightning arrester installation, earthing, wiring and solar PV by qualified electrical engineers. Working in all 25 districts of Sri Lanka, from Jaffna to Colombo.',
     path: '/',
     jsonLd: HOME_JSONLD,
   });

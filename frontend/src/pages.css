@@ -1455,3 +1455,18 @@ a.ui-card:focus-visible {
 }
 
 
+
+/* ---------- /areas ---------- */
+.areas { display: grid; gap: 40px; }
+html body .site .areas-prov-title, .areas-prov-title { margin: 0 0 14px; font-size: 22px; max-width: none; }
+.areas-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.areas-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 52px; padding: 0 18px; border-radius: 14px; border: 1px solid rgba(17, 17, 16, 0.1); background: #fff; color: #111110; text-decoration: none; font-weight: 600; }
+.areas-item .areas-count { font-size: 14px; font-weight: 500; color: #686863; }
+.areas-item.has-work { border-color: rgba(37, 99, 235, 0.35); }
+.areas-item.has-work .areas-count { color: #1d4ed8; }
+.areas-item.has-work:hover { border-color: #2563eb; box-shadow: 0 8px 24px -16px rgba(37, 99, 235, 0.6); }
+.area-clients { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; }
+html body .site .area-group h3, .area-group h3 { margin: 0 0 10px; font-size: 18px; }
+.area-group ul { margin: 0; padding-left: 18px; color: #55554f; line-height: 1.8; }
+.area-all { margin-top: 22px; }
+.area-all a { color: #1d4ed8; font-weight: 600; }
