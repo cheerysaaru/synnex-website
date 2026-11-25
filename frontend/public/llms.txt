@@ -1,0 +1,34 @@
+# Synnex Technology
+
+> Electrical engineering company in Colombo, Sri Lanka. Main work: lightning protection (lightning arresters, down conductors, earth pits and surge protection, designed and tested to SLS 1472 and IEC 62305). Also residential and commercial wiring, panel boards, load calculation, solar PV, generator and UPS setup, and electrical testing and inspections, island-wide. Owner and engineer: K. Arulalagan. Phone: +94 77 758 8128. Email: hello@synnex-technology.com. Hours: Monday to Friday, 10:00 to 18:00.
+
+The website is available in English, Tamil and Sinhala. Clients include hospitals, universities, schools, temples, councils, hotels and apartments across the Northern, Eastern and Western provinces.
+
+## Main service
+
+- [Lightning protection](https://synnex-technology.com/solutions/lightning-protection): conventional copper rods and ESE arresters, down conductors, earth pits with earth resistance testing, and surge protection devices
+
+## Services
+
+- [All solutions](https://synnex-technology.com/solutions): overview of every service
+- [Residential electrical](https://synnex-technology.com/solutions/residential): new builds, rewiring, lighting, earthing and RCD protection
+- [Commercial electrical](https://synnex-technology.com/solutions/commercial): offices, shops, three-phase distribution and maintenance
+- [Industrial electrical](https://synnex-technology.com/solutions/industrial): machinery power, load calculation and protection
+- [Solar and renewable energy](https://synnex-technology.com/solutions/solar): rooftop solar PV, grid-tied and hybrid systems
+- [Testing and inspection](https://synnex-technology.com/solutions/testing): fault finding, earthing tests and written reports
+- [Power backup](https://synnex-technology.com/solutions/power-backup): generator changeover and UPS
+
+## Company
+
+- [About](https://synnex-technology.com/about): who we are and how we work
+- [Safety](https://synnex-technology.com/safety): how safety is planned on every job
+- [Projects](https://synnex-technology.com/case-studies): examples of completed work
+- [Contact](https://synnex-technology.com/contact): phone, WhatsApp, email and enquiry form
+
+## Optional
+
+- [FAQ](https://synnex-technology.com/faq): common questions
+- [Blog](https://synnex-technology.com/blog): guides on boards, cables, solar and backup power
+- [Home electrical safety checklist](https://synnex-technology.com/resources/safety-checklist)
+- [Rooftop solar guide](https://synnex-technology.com/resources/solar-guide)
+- [Sitemap](https://synnex-technology.com/sitemap.xml)
