@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+# The quotation tool's files (the page itself, /admin/quotation, is login-only and noindex)
+Disallow: /quotation-app/
+
+Sitemap: https://synnex-technology.com/sitemap.xml
