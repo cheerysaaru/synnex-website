@@ -36,6 +36,9 @@ const PortalPage = page(() => import('./PortalPage.jsx'), 'PortalPage');
 const TrackPage = page(() => import('./TrackPage.jsx'), 'TrackPage');
 const AdminPage = page(() => import('./AdminPage.jsx'), 'AdminPage');
 const CookiesPage = page(() => import('./CookiesPage.jsx'), 'CookiesPage');
+const areas = () => import('./AreaPages.jsx');
+const AreasPage = page(areas, 'AreasPage');
+const AreaPage = page(areas, 'AreaPage');
 
 function Route() {
   const { path } = useRouter();
@@ -72,6 +75,10 @@ function Route() {
   if (path === '/track') return <TrackPage />;
   if (path === '/admin') return <AdminPage />;
   if (path === '/cookies') return <CookiesPage />;
+
+  if (path === '/areas') return <AreasPage />;
+  const areaMatch = path.match(/^\/areas\/([^/]+)$/);
+  if (areaMatch) return <AreaPage slug={areaMatch[1]} />;
 
   /* Nav compatibility: /projects and /contact must resolve too. */
   if (path === '/projects') return <CaseStudiesPage />;

@@ -43,7 +43,7 @@ export function SolutionPage({ slug }) {
   const item = solutions.items[slug];
 
   useSeo({
-    title: item ? item.title : 'Solution not found',
+    title: item ? (item.seoTitle || item.title) : 'Solution not found',
     description: item ? item.intro : 'This solution could not be found.',
     path: `/solutions/${slug}`,
   });

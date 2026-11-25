@@ -21,8 +21,8 @@ export const NAV_MENUS = [
       { tKey: 'co.d2.t', sKey: 'co.d2.s', href: '/team' },
       { tKey: 'co.d3.t', sKey: 'co.d3.s', href: '/careers' },
       { tKey: 'co.d4.t', sKey: 'co.d4.s', href: '/news' },
+      { tKey: 'co.ar.t', sKey: 'co.ar.s', href: '/areas' },
       { tKey: 'co.i3.t', sKey: 'co.i3.s', href: '/certifications' },
-      { tKey: 'co.i1.t', sKey: 'co.i1.s', href: '/about' },
     ],
     feature: {
       href: '/about',

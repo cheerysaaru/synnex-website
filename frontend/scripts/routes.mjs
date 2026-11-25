@@ -1,6 +1,7 @@
 /* Public pages for the sitemap and the prerender step (prints JSON).
    Private pages (/track, /portal, /admin, /login) are left out on purpose. */
 import { solutions, news, blog, caseStudies } from '../src/data/site-data.js';
+import { AREA_PAGES } from '../src/data/clients.js';
 
 const routes = [
   '/',
@@ -10,6 +11,7 @@ const routes = [
   '/news', ...news.posts.map((p) => `/news/${p.slug}`),
   '/blog', ...blog.posts.map((p) => `/blog/${p.slug}`),
   '/docs', '/faq', '/resources/safety-checklist', '/resources/solar-guide',
+  '/areas', ...AREA_PAGES.map((d) => `/areas/${d.slug}`),
   '/contact', '/cookies',
 ];
 

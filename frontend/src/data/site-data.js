@@ -203,6 +203,7 @@ export const solutions = {
     'lightning-protection': {
       slug: 'lightning-protection',
       title: 'Lightning Protection',
+      seoTitle: 'Lightning arrester installation and lightning protection engineers in Sri Lanka',
       eyebrow: 'Solutions',
       intro: 'Lightning arresters, down conductors, earthing and surge protection, designed and tested to SLS 1472 and IEC 62305.',
       services: [

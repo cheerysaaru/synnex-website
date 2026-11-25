@@ -7,94 +7,10 @@
    deliberately not published.
    ========================================================================== */
 import { useState } from 'react';
+import { Link } from '../lib/router.jsx';
+import { CLIENTS, CLIENT_GROUPS } from '../data/clients.js';
 
-const GROUPS = [
-  {
-    key: 'health',
-    label: 'Hospitals',
-    names: [
-      'Teaching Hospital Batticaloa',
-      'Base Hospital Nindavur',
-      'Kytes Hospital',
-      'CKD Hospital Mamadu',
-      'CKD Hospital Padaviya',
-      'CKD Hospital Padaviya Siripura',
-      'CKD Hospital Heppitikollawa',
-      'CKD Hospital Cheddikulam',
-      'CKD Hospital Mallavi',
-      'Siddha Medicine Unit, Kaithady',
-    ],
-  },
-  {
-    key: 'edu',
-    label: 'Schools and universities',
-    names: [
-      'University of Jaffna, Jaffna hostel',
-      'University of Jaffna, Pambaimadu hostel',
-      'Eastern University of Sri Lanka',
-      'St John’s College, Jaffna',
-      'Jaffna Central College',
-      'Kopay Christian College',
-      'Holy Family Convent, Jaffna',
-      'Vivekananda College, Kalladi',
-      'Al-Mazhar Girls’ High School, Ninthavur',
-      'Al Ameen School, Eravur',
-      'Sudaikkadu Tamil Vidyalayam, Trincomalee',
-      'Aandaankulam M.V., Mannar',
-      'Katchilaimadu M.V., Oddusuddan',
-      'GTMS School, Iyakkachchi',
-      'Mukkomban Maha Vidyalayam, Kilinochchi',
-    ],
-  },
-  {
-    key: 'temple',
-    label: 'Temples',
-    names: [
-      'Rajeswari Amman Temple, Maviddapuram',
-      'Puthukkudiyiruppu Kandasamy Kovil',
-      'Ponnalai Varatharaja Perumal Temple',
-      'Alvai Alaadi Pillaiyar Kovil',
-      'Sivan Kovil, Vavuniya',
-      'Pootharaayar Temple, Kondavil',
-    ],
-  },
-  {
-    key: 'gov',
-    label: 'Government',
-    names: [
-      'District Secretariat, Jaffna',
-      'Provincial Council Building, Kaithady',
-      'Urban Council Chavakachcheri',
-      'Urban Council Valvettithurai',
-      'Fire Brigade, Kilinochchi',
-    ],
-  },
-  {
-    key: 'apt',
-    label: 'Apartments',
-    names: [
-      'ONEX Apartment, Dehiwala',
-      'Orchard Apartment, Colombo 06',
-      'Sky City Apartment, Colombo 06',
-      'Vivekananda Apartment, Colombo 06',
-    ],
-  },
-  {
-    key: 'biz',
-    label: 'Hotels and business',
-    names: [
-      'Yarl Beach Hotel, Nelliyady',
-      'Rose Cottage Hotel, Kilinochchi',
-      'Honda Motors, Vavuniya',
-      'Agash Textiles',
-      'Paddy Store, Oddusuddan',
-      'VRSDO, Mankulam',
-      'Iniya Vaalvu Illam, Vallipunam',
-      'Badminton Court, Mullaitivu',
-    ],
-  },
-];
-
+const GROUPS = CLIENT_GROUPS.map((g) => ({ ...g, names: CLIENTS.filter((c) => c.group === g.key).map((c) => c.name) }));
 const ALL = GROUPS.flatMap((g) => g.names.map((name) => ({ name, key: g.key })));
 
 export default function ClientsWall() {
@@ -135,6 +51,7 @@ export default function ClientsWall() {
         <p className="cw-live" aria-live="polite">
           <span>Showing</span> <b>{current.count}</b> <span>{current.label}</span>
         </p>
+        <Link className="cw-areas" to="/areas">See our work by district</Link>
       </div>
     </section>
   );
