@@ -333,6 +333,7 @@ export function TrackPage() {
   const closePhoto = useCallback(() => setPhoto(null), []);
 
   useSeo({
+    noindex: true,
     title: 'Track my job',
     description: 'Follow your Synnex Technology job step by step, with notes and site photos.',
     path: '/track',

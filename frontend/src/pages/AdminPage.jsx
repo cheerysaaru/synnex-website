@@ -39,6 +39,7 @@ export function AdminPage() {
   const [error, setError] = useState('');
 
   useSeo({
+    noindex: true,
     title: 'Owner dashboard',
     description: 'Private owner dashboard.',
     path: '/admin',

@@ -23,6 +23,7 @@ export function PortalPage() {
   const [error, setError] = useState('');
 
   useSeo({
+    noindex: true,
     title: 'Your portal',
     description: 'Recent Synnex Technology updates and the enquiries you have sent.',
     path: '/portal',

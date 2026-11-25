@@ -11,6 +11,7 @@ export function LoginPage() {
   const { path, navigate } = useRouter();
 
   useSeo({
+    noindex: true,
     title: 'Sign in',
     description: 'Sign in to track your quotes, bookings and test certificates with Synnex Technology.',
     path: '/login',

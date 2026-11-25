@@ -2,6 +2,9 @@
 import { useEffect } from 'react';
 
 const SITE = 'Synnex Technology';
+/* The one official address. Every page names it as its canonical URL, so
+   www / http copies are treated as the same page by search engines. */
+export const SITE_URL = 'https://synnex-technology.com';
 
 const setMeta = (key, content, attr = 'name') => {
   if (!content) return;
@@ -14,11 +17,11 @@ const setMeta = (key, content, attr = 'name') => {
   el.setAttribute('content', content);
 };
 
-export function useSeo({ title, description, type = 'website', jsonLd, path }) {
+export function useSeo({ title, description, type = 'website', jsonLd, path, noindex = false }) {
   useEffect(() => {
     const fullTitle = title.includes(SITE) ? title : `${title} | ${SITE}`;
     document.title = fullTitle;
-    const url = window.location.origin + (path || window.location.pathname);
+    const url = SITE_URL + (path || window.location.pathname);
     setMeta('description', description);
     setMeta('og:title', fullTitle, 'property');
     setMeta('og:description', description, 'property');
@@ -26,6 +29,18 @@ export function useSeo({ title, description, type = 'website', jsonLd, path }) {
     setMeta('og:url', url, 'property');
     setMeta('og:site_name', SITE, 'property');
     setMeta('twitter:card', 'summary_large_image');
+    // Private pages (login, tracking, admin) stay out of search results.
+    let robots = document.head.querySelector('meta[name="robots"]');
+    if (noindex) {
+      if (!robots) {
+        robots = document.createElement('meta');
+        robots.setAttribute('name', 'robots');
+        document.head.appendChild(robots);
+      }
+      robots.setAttribute('content', 'noindex, nofollow');
+    } else if (robots) {
+      robots.remove();
+    }
 
     let canonical = document.head.querySelector('link[rel="canonical"]');
     if (!canonical) {
@@ -47,7 +62,7 @@ export function useSeo({ title, description, type = 'website', jsonLd, path }) {
     } else if (script) {
       script.remove();
     }
-  }, [title, description, type, path, jsonLd]);
+  }, [title, description, type, path, jsonLd, noindex]);
 }
 
 export function localBusinessJsonLd(company) {
@@ -56,7 +71,7 @@ export function localBusinessJsonLd(company) {
     '@type': 'ElectricalContractor',
     name: company.name,
     description: company.description,
-    url: window.location.origin + '/',
+    url: SITE_URL + '/',
     telephone: company.phoneHref,
     email: company.email,
     address: {
