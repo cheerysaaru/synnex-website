@@ -11,7 +11,7 @@ import LoginModal from './components/LoginModal.jsx';
 import ChatAssistant from './components/ChatAssistant.jsx';
 import { goAfterLogin, leaveLogin } from './lib/afterLogin.js';
 
-const PHONE = '0777588128';
+const PHONE = '+94777588128';
 
 /* --------------------------------------------------------------------------
    Navigation — one data object + one translation object drive the whole nav

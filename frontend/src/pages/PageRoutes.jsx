@@ -1,18 +1,43 @@
-/* Route switch for every inner page. Home ("/") is rendered by App.jsx. */
+/* Route switch for every inner page. Home ("/") is rendered by App.jsx.
+   Each group of pages is its own file that loads only when it is opened,
+   so the home page downloads less JavaScript. */
+import { Suspense, lazy } from 'react';
 import { useRouter } from '../lib/router.jsx';
-import { AboutPage, TeamPage, SafetyPage, CertificationsPage, CareersPage } from './CompanyPages.jsx';
-import { NewsPage, NewsArticlePage } from './NewsPages.jsx';
-import { SolutionsOverviewPage, SolutionPage } from './SolutionPages.jsx';
-import { BlogPage, BlogArticlePage, DocsPage, FaqPage, SafetyChecklistPage, SolarGuidePage } from './ResourcePages.jsx';
-import { CaseStudiesPage, CaseStudyPage } from './CaseStudyPages.jsx';
-import { ContactPage, NotFoundPage } from './MiscPages.jsx';
-import { LoginPage } from './LoginPage.jsx';
-import { PortalPage } from './PortalPage.jsx';
-import { TrackPage } from './TrackPage.jsx';
-import { AdminPage } from './AdminPage.jsx';
-import { CookiesPage } from './CookiesPage.jsx';
 
-export function PageRoutes() {
+const page = (load, name) => lazy(() => load().then((m) => ({ default: m[name] })));
+const company = () => import('./CompanyPages.jsx');
+const news = () => import('./NewsPages.jsx');
+const solutions = () => import('./SolutionPages.jsx');
+const resources = () => import('./ResourcePages.jsx');
+const cases = () => import('./CaseStudyPages.jsx');
+const misc = () => import('./MiscPages.jsx');
+
+const AboutPage = page(company, 'AboutPage');
+const TeamPage = page(company, 'TeamPage');
+const SafetyPage = page(company, 'SafetyPage');
+const CertificationsPage = page(company, 'CertificationsPage');
+const CareersPage = page(company, 'CareersPage');
+const NewsPage = page(news, 'NewsPage');
+const NewsArticlePage = page(news, 'NewsArticlePage');
+const SolutionsOverviewPage = page(solutions, 'SolutionsOverviewPage');
+const SolutionPage = page(solutions, 'SolutionPage');
+const BlogPage = page(resources, 'BlogPage');
+const BlogArticlePage = page(resources, 'BlogArticlePage');
+const DocsPage = page(resources, 'DocsPage');
+const FaqPage = page(resources, 'FaqPage');
+const SafetyChecklistPage = page(resources, 'SafetyChecklistPage');
+const SolarGuidePage = page(resources, 'SolarGuidePage');
+const CaseStudiesPage = page(cases, 'CaseStudiesPage');
+const CaseStudyPage = page(cases, 'CaseStudyPage');
+const ContactPage = page(misc, 'ContactPage');
+const NotFoundPage = page(misc, 'NotFoundPage');
+const LoginPage = page(() => import('./LoginPage.jsx'), 'LoginPage');
+const PortalPage = page(() => import('./PortalPage.jsx'), 'PortalPage');
+const TrackPage = page(() => import('./TrackPage.jsx'), 'TrackPage');
+const AdminPage = page(() => import('./AdminPage.jsx'), 'AdminPage');
+const CookiesPage = page(() => import('./CookiesPage.jsx'), 'CookiesPage');
+
+function Route() {
   const { path } = useRouter();
 
   if (path === '/about') return <AboutPage />;
@@ -53,4 +78,12 @@ export function PageRoutes() {
   if (path === '/contact') return <ContactPage />;
 
   return <NotFoundPage />;
+}
+
+export function PageRoutes() {
+  return (
+    <Suspense fallback={<div className="page-loading" aria-busy="true" style={{ minHeight: '70vh' }} />}>
+      <Route />
+    </Suspense>
+  );
 }

@@ -32,7 +32,7 @@ export function LoginPage() {
         />
         <video
           className="login-video"
-          src={`${import.meta.env.BASE_URL}videos/login-hero.mp4`}
+          src={`${import.meta.env.BASE_URL}videos/hero-1280.mp4`}
           poster={`${import.meta.env.BASE_URL}images/login-hero.jpg`}
           autoPlay
           muted

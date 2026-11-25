@@ -108,7 +108,7 @@ body footer.ft {
 
 .ft-owner {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(255, 255, 255, 0.66);
 }
 
 .ft-col h3 {
@@ -157,7 +157,7 @@ body footer.ft {
 
 .ft-muted {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(255, 255, 255, 0.66);
 }
 
 /* ---------- bottom bar */
@@ -170,7 +170,7 @@ body footer.ft {
   padding: 22px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.66);
 }
 
 .ft-bottom-links {

@@ -35,10 +35,29 @@ const spaFallback = () => ({
   },
 });
 
+// Adds <link rel="preload"> for the Mona Sans font so text can paint sooner.
+const preloadFont = () => {
+  let base = '/';
+  return {
+    name: 'preload-font',
+    configResolved(config) {
+      base = config.base;
+    },
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        const file = Object.keys(ctx.bundle || {}).find((n) => /MonaSans.*\.woff2$/.test(n));
+        if (!file) return html;
+        return html.replace('</head>', `  <link rel="preload" href="${base}${file}" as="font" type="font/woff2" crossorigin />\n  </head>`);
+      },
+    },
+  };
+};
+
 export default defineConfig({
   // '/' locally; the GitHub Pages build sets VITE_BASE=/synnex-website/
   base: process.env.VITE_BASE || '/',
-  plugins: [react(), spaFallback()],
+  plugins: [react(), spaFallback(), preloadFont()],
   server: {
     host: '0.0.0.0',
     port: 3001,
