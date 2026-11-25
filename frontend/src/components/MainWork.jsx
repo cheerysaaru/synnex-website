@@ -5,7 +5,7 @@
    ========================================================================== */
 import { Link } from '../lib/router.jsx';
 
-const PHOTO = 'https://images.unsplash.com/photo-1623392962768-a759c255f59a?auto=format&fit=crop&q=72';
+const PHOTO = 'https://images.unsplash.com/photo-1623392962768-a759c255f59a?auto=format&fit=crop&q=62';
 
 export default function MainWork() {
   return (
@@ -29,8 +29,8 @@ export default function MainWork() {
         <figure className="mw-media">
           <img
             src={`${PHOTO}&w=1000&h=1250`}
-            srcSet={`${PHOTO}&w=700&h=875 700w, ${PHOTO}&w=1000&h=1250 1000w, ${PHOTO}&w=1400&h=1750 1400w`}
-            sizes="(max-width: 860px) 100vw, 560px"
+            srcSet={`${PHOTO}&w=480&h=360 480w, ${PHOTO}&w=720&h=540 720w, ${PHOTO}&w=1000&h=1250 1000w, ${PHOTO}&w=1400&h=1750 1400w`}
+            sizes="(max-width: 860px) calc(100vw - 32px), 560px"
             alt="Lightning striking near a building at night"
             loading="lazy"
             decoding="async"

@@ -1,10 +1,11 @@
 /* Mona Sans (GitHub's typeface, SIL Open Font License, see assets/fonts/MonaSans-OFL.txt).
-   One variable file covers every weight used on the site. */
+   One variable file covers every weight used on the site. Cut down to Latin
+   letters and symbols (76 KB instead of 302 KB); Tamil and Sinhala text uses
+   the Noto fonts. */
 @font-face {
   font-family: 'Mona Sans';
   src: url('./assets/fonts/MonaSans.woff2') format('woff2');
   font-weight: 200 900;
-  font-stretch: 75% 125%;
   font-style: normal;
   font-display: swap;
 }

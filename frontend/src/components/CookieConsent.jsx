@@ -5,10 +5,10 @@ import { Link } from '../lib/router.jsx';
 import { getConsent, setConsent, OPEN_SETTINGS_EVENT } from '../lib/cookies.js';
 
 export default function CookieConsent() {
-  const [open, setOpen] = useState(false);
+  // Decide on the first render (no extra render after load), so the banner paints with the page.
+  const [open, setOpen] = useState(() => typeof document !== 'undefined' && !getConsent());
 
   useEffect(() => {
-    if (!getConsent()) setOpen(true);
     const reopen = () => setOpen(true);
     window.addEventListener(OPEN_SETTINGS_EVENT, reopen);
     return () => window.removeEventListener(OPEN_SETTINGS_EVENT, reopen);

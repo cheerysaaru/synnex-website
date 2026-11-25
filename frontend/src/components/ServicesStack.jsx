@@ -23,8 +23,8 @@ const SERVICES = [
 
 const N = SERVICES.length;
 const pad = (n) => String(n).padStart(2, '0');
-const photoUrl = (svc, w) => `https://images.unsplash.com/photo-${svc.img}?auto=format&fit=crop&w=${w}&q=70`;
-const photoSet = (svc) => [700, 1200, 1800].map((w) => `${photoUrl(svc, w)} ${w}w`).join(', ');
+const photoUrl = (svc, w) => `https://images.unsplash.com/photo-${svc.img}?auto=format&fit=crop&w=${w}&q=62`;
+const photoSet = (svc) => [480, 720, 960, 1280, 1800].map((w) => `${photoUrl(svc, w)} ${w}w`).join(', ');
 
 const ICONS = {
   home: 'M3 12l2-2 7-7 7 7 2 2M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6M4 12v9a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-9',
@@ -135,7 +135,7 @@ export default function ServicesStack() {
                     ))}
                   </span>
                 </div>
-                <a href="#contact" className="sk-btn">
+                <a href="#contact" className="sk-btn" aria-label={`Quote this job: ${svc.title}`}>
                   <span>Quote this job</span>
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" /></svg>
                 </a>
@@ -148,9 +148,9 @@ export default function ServicesStack() {
                   <img
                     src={photoUrl(svc, 1200)}
                     srcSet={photoSet(svc)}
-                    sizes="(max-width: 1240px) 100vw, 1200px"
+                    sizes="(max-width: 1240px) calc(100vw - 20px), 1200px"
                     alt=""
-                    loading="eager"
+                    loading={i === 0 ? 'eager' : 'lazy'}
                     decoding="async"
                     onError={() => markFailed(svc.id)}
                   />

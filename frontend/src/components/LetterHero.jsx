@@ -9,14 +9,23 @@
    the video through them. Scrolling scales that layer up around a point
    inside the "E", and fades it out at the end.
    ========================================================================== */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const WORD = 'SYNNEX';
 const ZOOM_LETTER = 4; // the "E" in SYNNEX: its stem is a solid block to zoom into
 const clamp = (v, a = 0, b = 1) => Math.min(Math.max(v, a), b);
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
-export default function LetterHero({ video = `${import.meta.env.BASE_URL}city-lights.mp4` }) {
+/* Phones get a 640px video (~0.3 MB), larger screens a 1280px one (~0.9 MB). */
+const HERO_BASE = `${import.meta.env.BASE_URL}videos/`;
+const pickHeroVideo = () => {
+  if (typeof window === 'undefined') return `${HERO_BASE}hero-1280.mp4`;
+  const small = window.matchMedia('(max-width: 760px)').matches;
+  return `${HERO_BASE}${small ? 'hero-640.mp4' : 'hero-1280.mp4'}`;
+};
+
+export default function LetterHero({ video }) {
+  const [heroSrc] = useState(() => video || pickHeroVideo());
   const trackRef = useRef(null);
   const maskRef = useRef(null);
   const letterRef = useRef(null);
@@ -150,7 +159,7 @@ export default function LetterHero({ video = `${import.meta.env.BASE_URL}city-li
   return (
     <header className="lh" id="top" ref={trackRef}>
       <div className="lh-stage">
-        <video className="lh-video" src={video} autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
+        <video className="lh-video" src={heroSrc} poster={`${HERO_BASE}hero-poster.jpg`} autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
         <div className="lh-tint" ref={tintRef} aria-hidden="true" />
 
         {/* white layer with the word cut out (screen blend shows the video in the letters) */}
