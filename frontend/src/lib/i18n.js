@@ -10,13 +10,6 @@
    To add or fix a translation, edit data/translations/*.js:
      ["English text", "Tamil", "Sinhala"]
    ========================================================================== */
-import t1 from '../data/translations/t1.js';
-import t2 from '../data/translations/t2.js';
-import t3 from '../data/translations/t3.js';
-import t4 from '../data/translations/t4.js';
-import t6 from '../data/translations/t6.js';
-import t7 from '../data/translations/t7.js';
-import t8 from '../data/translations/t8.js';
 
 const LANGS = ['ta', 'si'];
 const STORAGE_KEY = 'synnext_lang';
@@ -26,12 +19,18 @@ const SEPARATORS = [' | ', ' — ', ' · ', ' – '];
 
 const norm = (s) => s.replace(/\s+/g, ' ').trim();
 
-/* ---------- dictionary */
-const DICT = { ta: new Map(), si: new Map() };
-for (const [en, ta, si] of [...t1, ...t2, ...t3, ...t4, ...t6, ...t7, ...t8]) {
-  const key = norm(en);
-  if (ta) DICT.ta.set(key, ta);
-  if (si) DICT.si.set(key, si);
+/* ---------- dictionary
+   The Tamil/Sinhala tables are large, so they load only when someone picks
+   Tamil or Sinhala. English visitors never download them. */
+let DICT = null;
+let dictLoading = null;
+function loadDict() {
+  if (!dictLoading) {
+    dictLoading = import('./i18n-tables.js').then((m) => {
+      DICT = m.buildDict(norm);
+    });
+  }
+  return dictLoading;
 }
 
 const MONTHS = {
@@ -51,6 +50,7 @@ export function translate(text, lang) {
   const key = norm(text);
   if (!key || !/[A-Za-z]/.test(key)) return null;
 
+  if (!DICT) return null;
   const hit = DICT[lang].get(key);
   if (hit) return hit;
 
@@ -177,15 +177,26 @@ function start() {
   });
 }
 
-export function setLanguage(lang) {
-  current = LANGS.includes(lang) ? lang : 'en';
-  document.documentElement.lang = current;
-  document.documentElement.dataset.lang = current;
+function applyLanguage() {
   run(() => {
     walk(document.body);
     applyTitle();
   });
   start();
+}
+
+export function setLanguage(lang) {
+  current = LANGS.includes(lang) ? lang : 'en';
+  document.documentElement.lang = current;
+  document.documentElement.dataset.lang = current;
+  if (current !== 'en' && !DICT) {
+    const wanted = current;
+    loadDict().then(() => {
+      if (current === wanted) applyLanguage();
+    });
+    return;
+  }
+  applyLanguage();
 }
 
 /* ---------- boot: follow the language switcher in the nav */
